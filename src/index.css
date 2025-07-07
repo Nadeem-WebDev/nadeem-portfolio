@@ -58,3 +58,7 @@
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-blue-800;
 }
+
+*{
+  transition-duration: 2s;
+}

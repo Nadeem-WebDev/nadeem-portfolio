@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Menu, X, Github, Linkedin, Mail, ExternalLink, Code, Briefcase, User, Cpu, Send, FileText, GraduationCap } from 'lucide-react';
-import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaEnvelope, FaTwitter } from "react-icons/fa";
 import { motion } from "framer-motion";
-import ayushiImage from './images/ayy.png';
+import nadImage from './images/profile picture.jpg';
 import Multicloud from './images/Multicloud.jpeg';
 import coming_soon from './images/coming_soon.jpeg';
-import fake_invoice from './images/fake_invoice.jpeg';
+import fake_invoice from './images/fake_invoice2.jpeg';
 import song from './images/song2.jpeg';
-import food from './images/fem.png';
+import food from './images/user.png';
 
-import resume from './images/ayushi-resume.pdf';
+import resume from './images/resume.pdf';
 import certificate1 from './images/infosys.pdf';
 import certificate2 from './images/google.pdf';
 import certificate3 from './images/coursera.pdf';
@@ -50,7 +50,7 @@ function App() {
   <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-2 md:py-3">
     {/* Logo */}
     <h1 className="text-2xl md:text-3xl font-extrabold tracking-widest bg-gradient-to-r from-blue-500 to-pink-500 bg-clip-text text-transparent hover:scale-105 transition-all duration-700">
-      AG.
+      SNA.
     </h1>
 
     <div className="flex items-center space-x-4">
@@ -90,7 +90,7 @@ function App() {
         { href: '#home', label: 'Download Resume' }
       ].map(({ href, label }) => (
         <a
-          key={href}
+          key={label}
           href={href}
           onClick={() => setIsMenuOpen(false)}
           className="text-lg tracking-wide hover:text-blue-400 transition-colors duration-300 border-b border-white/5 pb-2"
@@ -120,26 +120,26 @@ function App() {
       {/* Profile Image */}
       <div className="w-36 h-36 md:w-44 md:h-44 mx-auto mb-6 rounded-full border-4 border-blue shadow-[0_0_20px_4px_rgba(255,255,255,0.6)] hover:shadow-[0_0_25px_8px_rgba(255,255,255,0.9)] transition-shadow duration-500 ease-in-out hover:scale-105 overflow-hidden">
         <img
-          src={ayushiImage}
-          className="w-full h-full object-cover object-top"
-          alt="Ayushi Gautam"
+          src={nadImage}
+          className="w-full h-full object-cover object-[0px_-40px]"
+          alt="Nadeem"
         />
       </div>
 
       <h1 className="font-poppins text-blue-300 text-sm mb-2 tracking-wider uppercase">Hello I'm</h1>
 
-      <h1 className="text-4xl md:text-7xl font-extrabold mb-4 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-        Ayushi Gautam
+      <h1 className="text-4xl md:text-6xl font-extrabold mb-4 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+        Sk Nadeem Ahammad
       </h1>
 
       <p className="text-lg md:text-xl text-blue-100/90 mb-6">
-        Software Developer
+        Full Stack Web Developer
       </p>
 
       <p className="text-sm md:text-base text-blue-200 max-w-xl mx-auto mb-8">
         I turn ideas into responsive, interactive web experiences ✨.
         Passionate about frontend magic, backend logic, and building full-stack apps that solve real-world problems.
-        Exploring Java, React, and AI to level up my craft.
+        Exploring Python, Java, React, and AI to level up my craft.
       </p>
 
       {/* Buttons */}
@@ -171,14 +171,17 @@ function App() {
 
       {/* Socials */}
       <div className="flex justify-center gap-6 text-blue-300 text-xl mt-6">
-        <a href="https://github.com/ayusheez" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:scale-110 transition">
+        <a href="mailto:nadeem786shaikh92@gmail.com" rel="noopener noreferrer" className="hover:text-white hover:scale-110 transition">
+          <FaEnvelope />
+        </a>
+        <a href="https://github.com/nadeem-webdev" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:scale-110 transition">
           <FaGithub />
         </a>
-        <a href="https://linkedin.com/in/ayushigautam91" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:scale-110 transition">
+        <a href="https://linkedin.com/in/sk-nadeem-ahammad-1035a4345" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:scale-110 transition">
           <FaLinkedin />
         </a>
-        <a href="mailto:gautamayushi91@gmail.com" className="hover:text-white hover:scale-110 transition">
-          <FaEnvelope />
+        <a href="https://x.com/nadeem_webdev" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:scale-110 transition">
+          <FaTwitter />
         </a>
       </div>
     </div>
@@ -232,9 +235,9 @@ function App() {
   viewport={{ once: true }}
 >
   <img
-    src={ayushiImage}
-    className="w-full h-full object-cover object-top"
-    alt="Ayushi Gautam"
+    src={nadImage}
+    className="w-full h-full object-cover object-[0px_-45px]"
+    alt="Nadeem"
   />
 </motion.div>
 
@@ -246,12 +249,12 @@ function App() {
         transition={{ delay: 0.3, duration: 0.8 }}
         viewport={{ once: true }}
       >
-        <p className="text-lg md:text-xl text-blue-100 leading-relaxed mb-8">
-  Hey, I'm <span className="text-blue-400 font-semibold">Ayushi Gautam</span> — a Full Stack Developer and AI Enthusiast with a love for crafting powerful, user-friendly web applications that actually make a difference. Whether it’s frontend finesse or backend logic, I thrive on turning complex ideas into clean, functional digital solutions.
+        <p className="text-lg md:text-xl text-blue-100 leading-relaxed mb-5">
+  Hey, I'm <span className="text-blue-400 font-semibold">Sk Nadeem Ahammad</span> — a Full Stack Developer and AI Enthusiast with a love for crafting powerful, user-friendly web applications that actually make a difference. Whether it's frontend magic or backend logic, I thrive on turning complex ideas into clean, functional digital solutions.
 </p>
 
-<p className="text-lg md:text-xl text-blue-100 leading-relaxed mb-8">
-  My tech journey began with a simple curiosity about how things work — now, it’s evolved into a full-blown obsession with building, learning, and experimenting. I’m especially passionate about artificial intelligence, React, and anything that challenges me to think differently. Let’s just say: I never stop leveling up.
+<p className="text-lg md:text-xl text-blue-100 leading-relaxed mb-5">
+  My tech journey began with a simple curiosity about how things work — now, it's evolved into a full-blown obsession with building, learning, and experimenting. I'm especially passionate about artificial intelligence, React, and anything that challenges me to think differently. Let's just say: I never stop leveling up.
 </p>
 
         
@@ -304,7 +307,7 @@ function App() {
     </div>
 
     {/* Skills Categories */}
-    <div className="grid md:grid-cols-3 gap-16">
+    <div className="grid md:grid-cols-4 gap-10">
       {/* Languages */}
       <div className="flex flex-col items-center transform hover:scale-110 transition-all duration-500">
         <div className="bg-gradient-to-tr from-pink-500 to-purple-500 p-4 rounded-full shadow-xl transform hover:rotate-6 transition-all duration-500">
@@ -312,7 +315,7 @@ function App() {
         </div>
         <h3 className="text-2xl font-semibold text-white mt-6 mb-4">Languages</h3>
         <div className="flex flex-wrap justify-center gap-3">
-          {['HTML', 'CSS', 'Java', 'JavaScript'].map((skill) => (
+          {['C','Python', 'Java', 'JavaScript','SQL'].map((skill) => (
             <div
               key={skill}
               className="px-5 py-2 bg-white/10 text-white rounded-full border border-white/20 text-sm font-semibold hover:bg-pink-500 hover:text-white hover:border-pink-500 transition-all duration-300 backdrop-blur-md shadow-md"
@@ -323,14 +326,14 @@ function App() {
         </div>
       </div>
 
-      {/* Frameworks, Libraries & Databases */}
+      {/* Web Technologies */}
       <div className="flex flex-col items-center transform hover:scale-110 transition-all duration-500">
         <div className="bg-gradient-to-tr from-blue-500 to-teal-400 p-4 rounded-full shadow-xl transform hover:rotate-6 transition-all duration-500">
-          <span className="text-white text-2xl">🛠️</span>
+          <span className="text-white text-2xl">⚙️</span>
         </div>
-        <h3 className="text-2xl font-semibold text-white mt-6 mb-4 text-center">Frameworks & Databases</h3>
+        <h3 className="text-2xl font-semibold text-white mt-6 mb-4 text-center">Web Technologies</h3>
         <div className="flex flex-wrap justify-center gap-3">
-          {['React', 'Node.js', 'Express.js', 'Tailwind CSS', 'MySQL', 'MongoDB', 'PostgreSQL'].map((skill) => (
+          {['HTML5','CSS3','React JS','Bootstrap', 'Tailwind','Node JS', 'Express JS', 'Rest APIs'].map((skill) => (
             <div
               key={skill}
               className="px-5 py-2 bg-white/10 text-white rounded-full border border-white/20 text-sm font-semibold hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-all duration-300 backdrop-blur-md shadow-md"
@@ -341,14 +344,33 @@ function App() {
         </div>
       </div>
 
+
+      {/* Databases */}
+      <div className="flex flex-col items-center transform hover:scale-110 transition-all duration-500">
+        <div className="bg-gradient-to-tr from-lime-200 via-emerald-300 to-green-400 p-4 rounded-full shadow-xl transform hover:rotate-6 transition-all duration-500">
+          <span className="text-white text-2xl">📦</span>
+        </div>
+        <h3 className="text-2xl font-semibold text-white mt-6 mb-4">Databases</h3>
+        <div className="flex flex-wrap justify-center gap-3">
+          {['My SQL','Postgre SQL', 'Mongo DB', 'SQLite'].map((skill) => (
+            <div
+              key={skill}
+              className="px-5 py-2 bg-white/10 text-white rounded-full border border-white/20 text-sm font-semibold hover:bg-green-400 hover:text-white hover:border-yellow-400 transition-all duration-300 backdrop-blur-md shadow-md"
+            >
+              {skill}
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Tools */}
       <div className="flex flex-col items-center transform hover:scale-110 transition-all duration-500">
         <div className="bg-gradient-to-tr from-yellow-400 to-pink-400 p-4 rounded-full shadow-xl transform hover:rotate-6 transition-all duration-500">
-          <span className="text-white text-2xl">⚙️</span>
+          <span className="text-white text-2xl">🛠️</span>
         </div>
         <h3 className="text-2xl font-semibold text-white mt-6 mb-4">Tools</h3>
         <div className="flex flex-wrap justify-center gap-3">
-          {['Git & GitHub', 'Postman', 'Render', 'Vercel'].map((skill) => (
+          {['VS Code','Git & GitHub', 'Postman','Ganache','Metamask'].map((skill) => (
             <div
               key={skill}
               className="px-5 py-2 bg-white/10 text-white rounded-full border border-white/20 text-sm font-semibold hover:bg-yellow-400 hover:text-white hover:border-yellow-400 transition-all duration-300 backdrop-blur-md shadow-md"
@@ -529,7 +551,7 @@ function App() {
           description: 'Developed responsive web applications using React and modern typescript.',
         },
         
-      ].map((exp, index) => (
+      ].map(exp => (
         <motion.div
           key={exp.role}
           className="p-5 md:p-6 bg-white/5 border border-white/10 rounded-xl backdrop-blur-xl shadow-xl hover:bg-white/10 transition-all duration-300 transform hover:scale-105"
@@ -638,14 +660,14 @@ function App() {
 
 
     {/* Soft Skills Heading */}
-    <div className="flex items-center space-x-2 mb-8">
+    <div className="flex items-center space-x-2 mb-8 px-10">
       <span className="text-green-400 text-2xl">🧠</span>
       <h2 className="text-3xl md:text-4xl font-bold tracking-wide text-white">Soft Skills</h2>
     </div>
 
     {/* Soft Skills Grid */}
     <motion.div
-      className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
+      className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 px-10"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
@@ -705,22 +727,22 @@ function App() {
     <div className="relative border-l-2 border-blue-500/30 pl-6 space-y-12">
       {[
         {
-          degree: 'Bachelor of Computer Engineering',
-          institution: 'Trinity College of Engineering and Research',
-          period: '2022 - 2026',
-          score: 'CGPA: 8.71',
+          degree: 'Bachelor of Engineering (Information Technology)',
+          institution: 'Theem College of Engineering',
+          period: '2021 - 2025',
+          score: 'CGPA: 7.73',
         },
         {
           degree: 'Higher Secondary Certificate (HSC)',
-          institution: 'Trinity Junior College',
-          period: '2020 - 2022',
-          score: 'Percentage: 73.50%',
+          institution: 'Thakur College of Science & Commerce',
+          period: '2021',
+          score: 'Percentage: 81.67%',
         },
         {
           degree: 'Secondary School Certificate (SSC)',
-          institution: 'Lady Faizunissa Khan English Medium School',
-          period: '2019 - 2020',
-          score: 'Percentage: 81.80%',
+          institution: 'S.S. Patna High School',
+          period: '2019',
+          score: 'Percentage: 79.86%',
         },
       ].map((edu, index) => (
         <motion.div
@@ -762,7 +784,7 @@ function App() {
 
       {/* Footer */}
       <footer className="py-6 border-t border-blue-900/30 bg-black text-center">
-        <p className="text-gray-400 text-sm">© 2025 Ayushi Gautam. All rights reserved.</p>
+        <p className="text-gray-400 text-sm">© 2025 Sk Nadeem Ahammad. All rights reserved.</p>
       </footer>
     </div>
   );

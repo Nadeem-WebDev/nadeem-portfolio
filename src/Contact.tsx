@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { Send, Mail, Linkedin, Github } from 'lucide-react';
+import { Send, Mail, Linkedin, Github, Twitter} from 'lucide-react';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 
@@ -20,19 +20,21 @@ const Contact = () => {
 
     if (form.current) {
       const formElements = form.current.elements as typeof form.current.elements & {
+        subject: HTMLInputElement;
         name: HTMLInputElement;
         email: HTMLInputElement;
         message: HTMLTextAreaElement;
       };
 
       const formData = {
-        from_name: formElements.name.value,
-        from_email: formElements.email.value,
+        subject: formElements.subject.value,
+        name: formElements.name.value,
+        email: formElements.email.value,
         message: formElements.message.value,
       };
 
       emailjs
-        .send(serviceID, templateID, formData)
+        .send(serviceID, templateID, formData, publicKey)
         .then(() => {
           alert("✅ Message sent successfully!");
           form.current?.reset();
@@ -65,26 +67,31 @@ const Contact = () => {
               I'm always open to new collaborations! Drop a message anytime.
             </p>
             <div className="space-y-4">
-              <a href="mailto:gautamayushi91@gmail.com" className="flex items-center space-x-3 text-blue-400">
+              <a href="mailto:nadeem786shaikh92@gmail.com" className="flex items-center space-x-3 text-blue-400">
                 <Mail size={18} />
-                <span>gautamayushi91@gmail.com</span>
+                <span>nadeem786shaikh92@gmail.com</span>
               </a>
-              <a href="https://linkedin.com/in/ayushigautam91" target="_blank" className="flex items-center space-x-3 text-blue-400">
+              <a href="https://www.linkedin.com/in/sk-nadeem-ahammad-1035a4345" target="_blank" className="flex items-center space-x-3 text-blue-400">
                 <Linkedin size={18} />
-                <span>linkedin.com/in/ayushigautam</span>
+                <span>Sk-Nadeem-Ahammad</span>
               </a>
-              <a href="https://github.com/ayusheez" target="_blank" className="flex items-center space-x-3 text-blue-400">
+              <a href="https://github.com/Nadeem-WebDev" target="_blank" className="flex items-center space-x-3 text-blue-400">
                 <Github size={18} />
-                <span>github.com/ayushigautam</span>
+                <span>Nadeem-WebDev</span>
+              </a>
+              <a href="https://x.com/nadeem_webdev" target="_blank" className="flex items-center space-x-3 text-blue-400">
+                <Twitter size={18} />
+                <span>nadeem_webdev</span>
               </a>
             </div>
           </motion.div>
 
           {/* Contact Form */}
           <motion.form ref={form} onSubmit={handleSubmit} className="space-y-4 bg-white/5 p-8 rounded-xl backdrop-blur-xl">
-            <input type="text" name="name" placeholder="Your Name" required className="w-full p-3 rounded-lg bg-blue-900/40 border border-blue-500/50 text-white" />
-            <input type="email" name="email" placeholder="Your Email" required className="w-full p-3 rounded-lg bg-blue-900/40 border border-blue-500/50 text-white" />
-            <textarea name="message" placeholder="Your Message" rows={4} required className="w-full p-3 rounded-lg bg-blue-900/40 border border-blue-500/50 text-white"></textarea>
+            <input type="text" name="subject" placeholder="Subject..." required className="w-full p-3 rounded-lg bg-blue-900/40 border border-blue-500/50 text-white" />
+            <input type="text" name="name" placeholder="Name..." required className="w-full p-3 rounded-lg bg-blue-900/40 border border-blue-500/50 text-white" />
+            <input type="email" name="email" placeholder="Email..." required className="w-full p-3 rounded-lg bg-blue-900/40 border border-blue-500/50 text-white" />
+            <textarea name="message" placeholder="Your Message..." rows={4} required className="w-full p-3 rounded-lg bg-blue-900/40 border border-blue-500/50 text-white"></textarea>
             <button type="submit" className="w-full py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-semibold">Send Message</button>
           </motion.form>
         </div>

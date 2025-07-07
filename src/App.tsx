@@ -9,7 +9,7 @@ import fake_invoice from './images/fake_invoice2.jpeg';
 import song from './images/song2.jpeg';
 import food from './images/user.png';
 
-import resume from './images/resume.pdf';
+import resume from './images/Resume.pdf';
 import certificate1 from './images/infosys.pdf';
 import certificate2 from './images/google.pdf';
 import certificate3 from './images/coursera.pdf';

@@ -356,7 +356,9 @@ function App() {
                       key={skill}
                       className="px-4 py-4 bg-white/10 text-white rounded-full border border-white/20 text-sm font-semibold hover:bg-pink-400 hover:text-white transition-all duration-300 backdrop-blur-md shadow-md"
                     >
-                      <img src={skill} alt="icon" className="w-7 h-7 text-blue-500" />
+                      <abbr title={skill.split("/")[7]}>
+                        <img src={skill} alt="icon" className="w-7 h-7 text-blue-500" />
+                      </abbr>
                     </div>
                   ))}
                 </div>
@@ -385,7 +387,9 @@ function App() {
                       key={skill}
                       className="px-4 py-4 bg-white/10 text-white rounded-full border border-white/20 text-sm font-semibold hover:bg-blue-500 hover:text-white transition-all duration-300 backdrop-blur-md shadow-md"
                     >
-                      <img src={skill} alt="icon" className="w-7 h-7 text-blue-500" />
+                      <abbr title={skill.split("/")[7] || "rest api"}>
+                        <img src={skill} alt="icon" className="w-7 h-7 text-blue-500" />
+                      </abbr>
                     </div>
                   ))}
                 </div>
@@ -410,7 +414,9 @@ function App() {
                         key={skill}
                         className="px-4 py-4 bg-white/10 text-white rounded-full border border-white/20 text-sm font-semibold hover:bg-green-400 hover:text-white transition-all duration-300 backdrop-blur-md shadow-md"
                       >
-                        <img src={skill} alt="icon" className="w-7 h-7 text-blue-500" />
+                        <abbr title={skill.split("/")[7]}>
+                          <img src={skill} alt="icon" className="w-7 h-7 text-blue-500" />
+                        </abbr>
                       </div>
                     )
                   )}
@@ -437,7 +443,9 @@ function App() {
                       key={skill}
                       className="px-4 py-4 bg-white/10 text-white rounded-full border border-white/20 text-sm font-semibold hover:bg-yellow-400 hover:text-white hover:border-yellow-400 transition-all duration-300 backdrop-blur-md shadow-md"
                     >
+                      <abbr title={skill.split("/")[7]}>
                         <img src={skill} alt="icon" className="w-7 h-7 text-blue-500" />
+                      </abbr>
                     </div>
                   ))}
                 </div>

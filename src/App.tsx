@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
-import { Menu, X, ExternalLink, Code, User, Cpu, GraduationCap, Briefcase } from "lucide-react";
+import {  Menu,  X,  ExternalLink,  Code,  User,  Cpu,  GraduationCap,  Briefcase } from "lucide-react";
 import { FaGithub, FaLinkedin, FaEnvelope, FaTwitter } from "react-icons/fa";
 import { motion } from "framer-motion";
+
 import nadImage from "./images/profile picture.jpg";
 import Multicloud from "./images/Multicloud.jpeg";
 import coming_soon from "./images/coming_soon.jpeg";
@@ -13,8 +14,8 @@ import resume from "./certificates/Nadeem's CV.pdf";
 import certificate1 from "./certificates/Coursera AWS S3 Basics.pdf";
 import certificate2 from "./certificates/Data Science using python.pdf";
 import certificate3 from "./certificates/Responsive_Web_Design_freeCodeCamp.pdf";
-import certificate4 from "./certificates/javascript_intermediate certificate.pdf";
-import Contact from "./Contact"; // NEW import
+import certificate4 from "./certificates/Infosys AI&ML.pdf";
+import Contact from "./Contact.tsx"; 
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -269,7 +270,7 @@ function App() {
 
               {/* Text & Cards */}
               <motion.div
-                className="max-w-xl text-center md:text-left backdrop-blur-xl bg-white/5 p-8 rounded-3xl border border-white/10 shadow-2xl"
+                className="max-w-xl text-center md:text-left md:max-w-3xl backdrop-blur-xl bg-white/5 p-8 rounded-3xl border border-white/10 shadow-2xl"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.8 }}
@@ -344,12 +345,18 @@ function App() {
                   Languages
                 </h3>
                 <div className="flex flex-wrap justify-center gap-3">
-                  {["C", "Python", "Java", "JavaScript", "SQL"].map((skill) => (
+                  {["https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg", 
+                  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg", 
+                  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg", 
+                  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg", 
+                  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg", 
+                  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azuresqldatabase/azuresqldatabase-original.svg"
+                ].map((skill) => (
                     <div
                       key={skill}
-                      className="px-5 py-2 bg-white/10 text-white rounded-full border border-white/20 text-sm font-semibold hover:bg-pink-500 hover:text-white hover:border-pink-500 transition-all duration-300 backdrop-blur-md shadow-md"
+                      className="px-4 py-4 bg-white/10 text-white rounded-full border border-white/20 text-sm font-semibold hover:bg-pink-400 hover:text-white transition-all duration-300 backdrop-blur-md shadow-md"
                     >
-                      {skill}
+                      <img src={skill} alt="icon" className="w-7 h-7 text-blue-500" />
                     </div>
                   ))}
                 </div>
@@ -365,20 +372,20 @@ function App() {
                 </h3>
                 <div className="flex flex-wrap justify-center gap-3">
                   {[
-                    "HTML5",
-                    "CSS3",
-                    "React JS",
-                    "Bootstrap",
-                    "Tailwind",
-                    "Node JS",
-                    "Express JS",
-                    "Rest APIs",
+                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg",
+                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg",
+                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
+                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg",
+                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg",
+                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg",
+                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg",
+                    "https://media.lordicon.com/icons/wired/gradient/1330-rest-api.svg",
                   ].map((skill) => (
                     <div
                       key={skill}
-                      className="px-5 py-2 bg-white/10 text-white rounded-full border border-white/20 text-sm font-semibold hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-all duration-300 backdrop-blur-md shadow-md"
+                      className="px-4 py-4 bg-white/10 text-white rounded-full border border-white/20 text-sm font-semibold hover:bg-blue-500 hover:text-white transition-all duration-300 backdrop-blur-md shadow-md"
                     >
-                      {skill}
+                      <img src={skill} alt="icon" className="w-7 h-7 text-blue-500" />
                     </div>
                   ))}
                 </div>
@@ -393,13 +400,17 @@ function App() {
                   Databases
                 </h3>
                 <div className="flex flex-wrap justify-center gap-3">
-                  {["My SQL", "Postgre SQL", "Mongo DB", "SQLite"].map(
+                  {["https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg",
+                   "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg", 
+                   "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg", 
+                   "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg"
+                  ].map(
                     (skill) => (
                       <div
                         key={skill}
-                        className="px-5 py-2 bg-white/10 text-white rounded-full border border-white/20 text-sm font-semibold hover:bg-green-400 hover:text-white hover:border-yellow-400 transition-all duration-300 backdrop-blur-md shadow-md"
+                        className="px-4 py-4 bg-white/10 text-white rounded-full border border-white/20 text-sm font-semibold hover:bg-green-400 hover:text-white transition-all duration-300 backdrop-blur-md shadow-md"
                       >
-                        {skill}
+                        <img src={skill} alt="icon" className="w-7 h-7 text-blue-500" />
                       </div>
                     )
                   )}
@@ -408,7 +419,7 @@ function App() {
 
               {/* Tools */}
               <div className="flex flex-col items-center transform hover:scale-110 transition-all duration-500">
-                <div className="bg-gradient-to-tr from-yellow-400 to-pink-400 p-4 rounded-full shadow-xl transform hover:rotate-6 transition-all duration-500">
+                <div className="bg-gradient-to-tr from-yellow-400 to-pink-400 p-4 rounded-full shadow-xl transform hover:rotate-12 transition-all duration-500">
                   <span className="text-white text-2xl">🛠️</span>
                 </div>
                 <h3 className="text-2xl font-semibold text-white mt-6 mb-4">
@@ -416,17 +427,17 @@ function App() {
                 </h3>
                 <div className="flex flex-wrap justify-center gap-3">
                   {[
-                    "VS Code",
-                    "Git & GitHub",
-                    "Postman",
-                    "Ganache",
-                    "Metamask",
+                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg",
+                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg",
+                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg",
+                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg",
+                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original.svg",
                   ].map((skill) => (
                     <div
                       key={skill}
-                      className="px-5 py-2 bg-white/10 text-white rounded-full border border-white/20 text-sm font-semibold hover:bg-yellow-400 hover:text-white hover:border-yellow-400 transition-all duration-300 backdrop-blur-md shadow-md"
+                      className="px-4 py-4 bg-white/10 text-white rounded-full border border-white/20 text-sm font-semibold hover:bg-yellow-400 hover:text-white hover:border-yellow-400 transition-all duration-300 backdrop-blur-md shadow-md"
                     >
-                      {skill}
+                        <img src={skill} alt="icon" className="w-7 h-7 text-blue-500" />
                     </div>
                   ))}
                 </div>
@@ -447,11 +458,11 @@ function App() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 animate-slide-up">
               {[
                 {
-                  title: "CloudSync",
+                  title: "Bakery Shop",
                   description:
                     "An unified Multicloud storage application for Google Drive and one drive.",
-                  image: Multicloud,
-                  link: "http://multicloud-woad.vercel.app",
+                  image: "https://honey-bakery-shop.vercel.app/assets/main-BnoiELOh.png",
+                  link: "http://honey-bakery-shop.vercel.app",
                 },
                 {
                   title: "FemCare",
@@ -487,7 +498,7 @@ function App() {
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-48 md:h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="w-full h-48 md:h-64 cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-black/20 p-4 md:p-6 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-all duration-300">
                     <h3 className="text-lg md:text-xl font-bold mb-2 text-white">
@@ -528,15 +539,15 @@ function App() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-          <div className="flex items-center space-x-2 mb-12">
-            <Briefcase className="text-blue-500" size={28} />
-            <h2 className="text-3xl md:text-4xl font-bold tracking-wide text-white">
-              Experience
-            </h2>
-          </div> */}
+            <div className="flex items-center space-x-2 mb-12">
+              <Briefcase className="text-blue-500" size={28} />
+              <h2 className="text-3xl md:text-4xl font-bold tracking-wide text-white">
+                Experience
+              </h2>
+            </div> */}
 
-            {/* Experience Cards */}
-            {/* <motion.div
+        {/* Experience Cards */}
+        {/* <motion.div
               className="space-y-6 md:space-y-8"
               initial="hidden"
               whileInView="visible"
@@ -589,8 +600,6 @@ function App() {
           </motion.div>
         </section> */}
 
-        
-
         {/*certificate section*/}
         <section
           id="certifications"
@@ -618,28 +627,32 @@ function App() {
                 {
                   title: "Data Science using Python",
                   provider: "LivetechINDIA",
-                  icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+                  icon: "https://cdn-icons-png.flaticon.com/512/5408/5408783.png",
                   gradient: "from-blue-400 to-cyan-500",
                   link: certificate2,
                 },
                 {
                   title: "Responsive Web Design",
                   provider: "freeCodeCamp",
-                  icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+                  icon: "https://cdn-icons-png.flaticon.com/512/2504/2504196.png",
                   gradient: "from-blue-600 to-indigo-500",
                   link: certificate3,
                 },
                 {
-                  title: "JavaScript (Intermediate)",
-                  provider: "HackerRank",
-                  icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+                  title: "Artificial Intelligence & Machine Learning",
+                  provider: "Infosys Springboard",
+                  icon: "https://cdn-icons-png.flaticon.com/512/8637/8637099.png",
                   gradient: "from-green-400 to-blue-500",
                   link: certificate4,
                 },
               ].map((cert, index) => (
-                <div
+                <motion.div
                   key={index}
-                  className="rounded-2xl shadow-md overflow-hidden bg-[#111111] border border-white/10 backdrop-blur-md"
+                  className="bg-white/5 border border-white/10  backdrop-blur-xl shadow-xl hover:bg-white/10 transition-all duration-300 transform hover:scale-105 rounded-2xl overflow-hidden bg-[#111111] "
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0 },
+                  }}
                 >
                   {/* Gradient Header */}
                   <div
@@ -664,7 +677,7 @@ function App() {
                       <span className="inline-block ml-1">↗</span>
                     </a>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>

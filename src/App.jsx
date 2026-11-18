@@ -11,6 +11,7 @@ import Preloader from "./Preloader.jsx";
 import Navbar from "./Navbar.jsx";
 import Hero from "./Hero.jsx";
 import Skills from "./Skills.jsx";
+import CustomCursor from "./CustomCursor.jsx";
 
 // The loading screen plays once per browser session (not on every reload),
 // and never for visitors who have turned off animations in their system settings
@@ -43,6 +44,9 @@ function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-black text-slate-900 dark:text-white">
+      {/* Custom mouse cursor (desktop mice only) */}
+      <CustomCursor />
+
       {/* Loading screen (first visit of the session only) */}
       {isLoading && <Preloader onComplete={handlePreloaderComplete} />}
 

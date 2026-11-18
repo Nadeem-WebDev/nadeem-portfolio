@@ -61,7 +61,7 @@
         background: var(--page);
         color: var(--text);
         font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-        overflow: hidden;
+        overflow-x: hidden; /* the glows may poke out sideways; vertical scroll stays on for short screens */
         position: relative;
       }
 
@@ -96,8 +96,8 @@
       .card {
         position: relative;
         width: 100%;
-        max-width: 560px;
-        padding: 48px 32px;
+        max-width: 620px;
+        padding: 44px 28px;
         text-align: center;
         border-radius: 28px;
         background: var(--card);
@@ -114,7 +114,7 @@
 
       /* Big "404" with a light sweeping across the gradient (same effect as the name on the home page) */
       .code {
-        font-size: clamp(96px, 22vw, 160px);
+        font-size: clamp(84px, 20vw, 136px);
         font-weight: 900;
         line-height: 1;
         letter-spacing: -4px;
@@ -145,22 +145,6 @@
         max-width: 380px;
         color: var(--muted);
         line-height: 1.6;
-      }
-
-      .path {
-        display: inline-block;
-        margin-top: 16px;
-        padding: 6px 12px;
-        border-radius: 999px;
-        font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
-        font-size: 13px;
-        color: var(--muted);
-        background: var(--card);
-        border: 1px solid var(--border);
-        max-width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
       }
 
       .actions {
@@ -204,8 +188,95 @@
       .contact a { color: #3b82f6; text-decoration: none; font-weight: 600; }
       .contact a:hover { text-decoration: underline; }
 
+      /* ---------- Fake terminal: a little debugging session ---------- */
+      .term {
+        margin: 24px auto 0;
+        text-align: left;
+        border-radius: 16px;
+        overflow: hidden;
+        background: #0b1020; /* terminals are dark in both themes */
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.6);
+      }
+      .term-bar {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 14px;
+        background: rgba(255, 255, 255, 0.04);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .term-bar i { width: 10px; height: 10px; border-radius: 50%; display: block; }
+      .term-bar i:nth-child(1) { background: #ef4444; }
+      .term-bar i:nth-child(2) { background: #f59e0b; }
+      .term-bar i:nth-child(3) { background: #22c55e; }
+      .term-bar span {
+        margin-left: 8px;
+        font-size: 12px;
+        color: #64748b;
+        font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+      }
+      .term-body {
+        padding: 14px 16px 16px;
+        min-height: 168px; /* room for every line, so the card doesn't jump while typing */
+        font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+        font-size: 13px;
+        font-variant-ligatures: none; /* stop coding fonts turning "->" into arrows */
+        line-height: 1.7;
+        color: #cbd5e1;
+      }
+      @media (max-width: 480px) {
+        .term-body { font-size: 12px; min-height: 0; }
+      }
+      .term-body div { white-space: pre-wrap; word-break: break-word; }
+      .term-body .cmd::before { content: '$ '; color: #a78bfa; }
+      .term-body .err { color: #f87171; }
+      .term-body .ok { color: #34d399; }
+      .term-body .dim { color: #94a3b8; }
+      .caret {
+        display: inline-block;
+        width: 8px;
+        height: 15px;
+        margin-left: 2px;
+        vertical-align: -2px;
+        background: #a78bfa;
+        animation: blink 1s steps(1) infinite;
+      }
+      @keyframes blink { 50% { opacity: 0; } }
+
+      /* ---------- Excuse generator ---------- */
+      .excuse {
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .excuse q {
+        color: var(--text);
+        font-weight: 600;
+        font-style: italic;
+      }
+      .excuse button {
+        font: inherit;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        padding: 6px 12px;
+        border-radius: 999px;
+        color: var(--text);
+        background: var(--card);
+        border: 1px solid var(--border);
+        transition: border-color 0.2s ease, transform 0.2s ease;
+      }
+      .excuse button:hover { border-color: rgba(168, 85, 247, 0.6); transform: rotate(-3deg); }
+      .excuse button:active { transform: scale(0.94); }
+
       @media (prefers-reduced-motion: reduce) {
-        .glow, .card, .code { animation: none; }
+        .glow, .card, .code, .caret { animation: none; }
         .code { background-position: -50% 0, 0 0; }
       }
     </style>
@@ -224,9 +295,20 @@
 
     <main class="card">
       <div class="code">404</div>
-      <h1>Page not found</h1>
-      <p>The page you're looking for doesn't exist or may have moved. Let's get you back on track.</p>
-      <div class="path" id="path"></div>
+      <h1>Well, this is awkward.</h1>
+      <p>I built this whole portfolio and you still found the one page I didn't. Let's pretend this never happened.</p>
+
+      <!-- Typed out by the script at the bottom -->
+      <div class="term" role="img" aria-label="A joke terminal session: the page can't be found, git blame says it's my unfinished TODO, and even sudo can't find it.">
+        <div class="term-bar" aria-hidden="true"><i></i><i></i><i></i><span>nadeem@portfolio: ~</span></div>
+        <div class="term-body" id="term" aria-hidden="true"></div>
+      </div>
+
+      <div class="excuse">
+        <span>Official excuse:</span>
+        <q id="excuse">It works on my machine.</q>
+        <button type="button" id="new-excuse">🎲 Another one</button>
+      </div>
 
       <div class="actions">
         <a class="btn primary" href="/">
@@ -241,12 +323,95 @@
         </a>
       </div>
 
-      <p class="contact">Think something's broken? <a href="/#contact">Let me know</a></p>
+      <p class="contact">Found a real bug? <a href="/#contact">Report it</a> and I'll call it a feature.</p>
     </main>
 
     <script>
-      // Show the address the visitor tried to open
-      document.getElementById('path').textContent = window.location.pathname;
+      // ---------- Fake terminal ----------
+      // The address the visitor tried to open (shortened if it's very long).
+      // Everything goes in with textContent, never as HTML, so a strange
+      // address can't inject anything into the page.
+      var path = window.location.pathname;
+      try { path = decodeURIComponent(path); } catch (e) {} // keep it encoded if it's malformed
+      if (path.length > 40) path = path.slice(0, 37) + '...';
+
+      var lines = [
+        { cls: 'cmd', text: 'cd ' + path },
+        { cls: 'err', text: 'cd: no such file or directory: ' + path },
+        { cls: 'cmd', text: 'git blame ' + path },
+        { cls: 'dim', text: 'Sk Nadeem Ahammad · just now · "// TODO: build this page"' },
+        { cls: 'cmd', text: 'sudo find ' + path },
+        { cls: 'ok', text: "Nice try. Even sudo can't find it. Try the buttons below ↓" }
+      ];
+
+      var term = document.getElementById('term');
+      var caret = document.createElement('span');
+      caret.className = 'caret';
+
+      function addLine(line) {
+        var div = document.createElement('div');
+        div.className = line.cls;
+        term.appendChild(div);
+        return div;
+      }
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        // No typing animation: show the whole session at once
+        lines.forEach(function (line) { addLine(line).textContent = line.text; });
+      } else {
+        var i = 0;
+        (function next() {
+          if (i >= lines.length) return;
+          var line = lines[i++];
+          var div = addLine(line);
+          if (line.cls !== 'cmd') {
+            // Output appears all at once, like a real terminal
+            div.textContent = line.text;
+            div.appendChild(caret);
+            setTimeout(next, 450);
+            return;
+          }
+          // Commands are "typed" one letter at a time
+          var n = 0;
+          (function type() {
+            div.textContent = line.text.slice(0, ++n);
+            div.appendChild(caret);
+            if (n < line.text.length) setTimeout(type, 35 + Math.random() * 45);
+            else setTimeout(next, 350);
+          })();
+        })();
+      }
+
+      // ---------- Excuse generator ----------
+      var excuses = [
+        'It works on my machine.',
+        "That's not a bug, it's an undocumented feature.",
+        'It must be a caching issue.',
+        "I'll fix it in the next sprint.",
+        'It was working five minutes ago.',
+        'Have you tried clearing your cache?',
+        'The intern deployed on a Friday.',
+        'Mercury is in retrograde.',
+        'It passed all the tests. (There were no tests.)',
+        'This page is still in my backlog.',
+        'The page is fine. The URL is wrong.',
+        'AI wrote that link, not me.'
+      ];
+      var excuseEl = document.getElementById('excuse');
+      var current = 0;
+      document.getElementById('new-excuse').addEventListener('click', function () {
+        var pick;
+        do { pick = Math.floor(Math.random() * excuses.length); } while (pick === current);
+        current = pick;
+        excuseEl.textContent = excuses[pick];
+      });
+
+      // A little something for anyone who opens the developer tools here
+      console.log(
+        '%cLooking for bugs? You found one.%c\nThis page doesn\'t exist, but my portfolio does: ' + window.location.origin,
+        'font-size:16px;font-weight:bold;color:#a855f7',
+        'color:inherit'
+      );
     </script>
   </body>
 </html>

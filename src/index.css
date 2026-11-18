@@ -157,6 +157,86 @@ main > section + section::before {
   z-index: 1;
 }
 
+/* ---------- Custom cursor (see CustomCursor.jsx) ---------- */
+
+/* Hide the normal arrow/hand once the custom cursor is running.
+   Text fields keep the normal I-beam so typing feels natural. */
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none !important;
+}
+html.has-custom-cursor :is(input:not([type="submit"]):not([type="checkbox"]):not([type="radio"]), textarea, select, [contenteditable="true"]) {
+  cursor: auto !important;
+}
+
+.cursor-root {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10000; /* above the navbar, menus and the loading screen */
+  transition: opacity 0.3s ease;
+}
+.cursor-root[data-visible="false"],
+.cursor-root[data-text="true"] {
+  opacity: 0;
+}
+
+/* Moved by JS to the mouse position; the child is centred on that point */
+.cursor-follower {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
+.cursor-dot,
+.cursor-ring {
+  position: absolute;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s ease, height 0.25s ease, background-color 0.25s ease,
+    border-color 0.25s ease, opacity 0.25s ease, scale 0.15s ease;
+}
+
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(135deg, #3b82f6, #a855f7);
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.6);
+}
+
+.cursor-ring {
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid rgba(124, 58, 237, 0.55); /* purple, readable on light */
+}
+.dark .cursor-ring {
+  border-color: rgba(167, 139, 250, 0.6);
+}
+
+/* Over links and buttons: the ring grows and fills softly, the dot shrinks.
+   White line + purple outline/glow so it stays visible on white glass
+   buttons and on the purple gradient buttons alike. */
+.cursor-root[data-hover="true"] .cursor-ring,
+.dark .cursor-root[data-hover="true"] .cursor-ring {
+  width: 56px;
+  height: 56px;
+  background-color: rgba(139, 92, 246, 0.12);
+  border-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 0 1.5px rgba(139, 92, 246, 0.7), 0 0 18px rgba(139, 92, 246, 0.45);
+}
+.cursor-root[data-hover="true"] .cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  box-shadow: 0 0 0 1.5px rgba(139, 92, 246, 0.8);
+}
+
+/* While the mouse button is pressed */
+.cursor-root[data-down="true"] .cursor-ring {
+  scale: 0.8;
+}
+
 /* ---------- Hero name: light sweeping across the gradient text ---------- */
 
 /* Two background layers clipped to the text: a moving white shine on top of

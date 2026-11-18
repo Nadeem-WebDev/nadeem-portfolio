@@ -1,10 +1,61 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="./src/images/user.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hi I'm Nadeem</title>
+
+    <!-- Primary meta tags (what Google shows) -->
+    <title>Sk Nadeem Ahammad | Full Stack Developer</title>
+    <meta name="description" content="Portfolio of Sk Nadeem Ahammad, a full stack developer in Mumbai building React, Node.js and PostgreSQL apps. See projects, experience, skills and resume." />
+    <meta name="author" content="Sk Nadeem Ahammad" />
+    <link rel="canonical" href="https://nadeem-07-portfolio.vercel.app/" />
+
+    <!-- Open Graph (link previews on LinkedIn, WhatsApp, Facebook...) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://nadeem-07-portfolio.vercel.app/" />
+    <meta property="og:title" content="Sk Nadeem Ahammad | Full Stack Developer" />
+    <meta property="og:description" content="Full stack developer in Mumbai building React, Node.js and PostgreSQL apps. See projects, experience, skills and resume." />
+    <meta property="og:image" content="https://nadeem-07-portfolio.vercel.app/profile.jpg" />
+    <meta property="og:image:alt" content="Sk Nadeem Ahammad" />
+
+    <!-- Twitter / X card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Sk Nadeem Ahammad | Full Stack Developer" />
+    <meta name="twitter:description" content="Full stack developer in Mumbai building React, Node.js and PostgreSQL apps." />
+    <meta name="twitter:image" content="https://nadeem-07-portfolio.vercel.app/profile.jpg" />
+
+    <!-- Color of the browser bar on mobile (updated when the theme changes) -->
+    <meta name="theme-color" content="#000000" />
+
+    <!-- Apply the saved light/dark theme before the first paint, so there's no flash.
+         The page starts dark (class="dark" above) unless the visitor chose light. -->
+    <script>
+      try {
+        if (localStorage.getItem('theme') === 'light') {
+          document.documentElement.classList.remove('dark');
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f8fafc');
+        }
+      } catch (e) {}
+    </script>
+
+    <!-- Structured data: tells search engines who this page is about -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Sk Nadeem Ahammad",
+        "jobTitle": "Full Stack Developer",
+        "url": "https://nadeem-07-portfolio.vercel.app/",
+        "image": "https://nadeem-07-portfolio.vercel.app/profile.jpg",
+        "address": { "@type": "PostalAddress", "addressLocality": "Mumbai", "addressCountry": "IN" },
+        "sameAs": [
+          "https://github.com/Nadeem-WebDev",
+          "https://www.linkedin.com/in/nadeem-shaikh-1035a4345/",
+          "https://www.instagram.com/nadeem_7_shaikh/"
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

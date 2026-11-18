@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from 'react';
-import { Send, Mail, Linkedin, Github, Twitter} from 'lucide-react';
+import { useRef, useEffect } from 'react';
+import { Send, Mail, Linkedin, Github, Instagram } from 'lucide-react';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 
@@ -8,23 +8,18 @@ const templateID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
 const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 const Contact = () => {
-  const form = useRef<HTMLFormElement>(null);
+  const form = useRef(null);
 
   // Initialize EmailJS with the public key once
   useEffect(() => {
     emailjs.init(publicKey);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (form.current) {
-      const formElements = form.current.elements as typeof form.current.elements & {
-        subject: HTMLInputElement;
-        name: HTMLInputElement;
-        email: HTMLInputElement;
-        message: HTMLTextAreaElement;
-      };
+      const formElements = form.current.elements;
 
       const formData = {
         subject: formElements.subject.value,
@@ -71,17 +66,17 @@ const Contact = () => {
                 <Mail size={18} />
                 <span>nadeem786shaikh92@gmail.com</span>
               </a>
-              <a href="https://www.linkedin.com/in/sk-nadeem-ahammad-1035a4345" target="_blank" className="flex items-center space-x-3 text-blue-400">
+              <a href="https://www.linkedin.com/in/nadeem-shaikh-1035a4345/" target="_blank" className="flex items-center space-x-3 text-blue-400">
                 <Linkedin size={18} />
-                <span>Sk-Nadeem-Ahammad</span>
+                <span>Nadeem-Shaikh</span>
               </a>
               <a href="https://github.com/Nadeem-WebDev" target="_blank" className="flex items-center space-x-3 text-blue-400">
                 <Github size={18} />
                 <span>Nadeem-WebDev</span>
               </a>
-              <a href="https://x.com/nadeem_webdev" target="_blank" className="flex items-center space-x-3 text-blue-400">
-                <Twitter size={18} />
-                <span>nadeem_webdev</span>
+              <a href="https://www.instagram.com/nadeem_7_shaikh/" target="_blank" className="flex items-center space-x-3 text-blue-400">
+                <Instagram size={18} />
+                <span>nadeem_7_shaikh</span>
               </a>
             </div>
           </motion.div>

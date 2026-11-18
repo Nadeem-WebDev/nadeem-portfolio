@@ -1,18 +1,12 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 
-type Theme = 'dark' | 'light';
+// theme is either 'dark' or 'light'
+const ThemeContext = createContext(undefined);
 
-interface ThemeContextType {
-  theme: Theme;
-  toggleTheme: () => void;
-}
-
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
-
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(() => {
+export function ThemeProvider({ children }) {
+  const [theme, setTheme] = useState(() => {
     const savedTheme = localStorage.getItem('theme');
-    return (savedTheme as Theme) || 'dark';
+    return savedTheme || 'dark';
   });
 
   useEffect(() => {

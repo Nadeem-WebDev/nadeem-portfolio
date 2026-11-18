@@ -1,34 +1,29 @@
 import { useState, useEffect, useRef } from "react";
-import {  Menu,  X,  ExternalLink,  Code,  User,  Cpu,  GraduationCap,  Briefcase } from "lucide-react";
-import { FaGithub, FaLinkedin, FaEnvelope, FaTwitter } from "react-icons/fa";
+import {  Menu,  X,  ExternalLink,  Code,  User,  Cpu,  GraduationCap,  Briefcase,  Sparkles,  Mail,  Rocket,  FileText,  Laptop,  Globe,  Database,  Wrench,  Award,  ArrowUpRight,  Brain } from "lucide-react";
+import { FaGithub, FaLinkedin, FaEnvelope, FaInstagram } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 import nadImage from "./images/profile picture.jpg";
-import Multicloud from "./images/Multicloud.jpeg";
-import coming_soon from "./images/coming_soon.jpeg";
-import fake_invoice from "./images/fake_invoice2.jpeg";
-import song from "./images/song2.jpeg";
-import food from "./images/user.png";
 
-import resume from "./certificates/Nadeem's CV.pdf";
+import resume from "./certificates/Nadeem_Resume.pdf";
 import certificate1 from "./certificates/Coursera AWS S3 Basics.pdf";
 import certificate2 from "./certificates/Data Science using python.pdf";
 import certificate3 from "./certificates/Responsive_Web_Design_freeCodeCamp.pdf";
 import certificate4 from "./certificates/Infosys AI&ML.pdf";
-import Contact from "./Contact.tsx"; 
+import Contact from "./Contact.jsx";
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef(null);
+  const buttonRef = useRef(null);
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClickOutside = (event) => {
       if (
         menuRef.current &&
         buttonRef.current &&
-        !menuRef.current.contains(event.target as Node) &&
-        !buttonRef.current.contains(event.target as Node)
+        !menuRef.current.contains(event.target) &&
+        !buttonRef.current.contains(event.target)
       ) {
         setIsMenuOpen(false);
       }
@@ -100,7 +95,7 @@ function App() {
               { href: "#projects", label: "Projects" },
               // { href: '#experience', label: 'Experience' },
               { href: "#contact", label: "Contact" },
-              { href: "#home", label: "Download Resume" },
+              { href: resume, label: "Download Resume" },
             ].map(({ href, label }) => (
               <a
                 key={label}
@@ -154,7 +149,8 @@ function App() {
             </p>
 
             <p className="text-sm md:text-base text-blue-200 max-w-xl mx-auto mb-8">
-              I turn ideas into responsive, interactive web experiences ✨.
+              I turn ideas into responsive, interactive web experiences{" "}
+              <Sparkles size={16} className="inline-block align-[-2px] text-yellow-300" />.
               Passionate about frontend magic, backend logic, and building
               full-stack apps that solve real-world problems. Exploring Python,
               Java, React, and AI to level up my craft.
@@ -164,25 +160,25 @@ function App() {
             <div className="flex flex-wrap justify-center items-center gap-4 mt-6">
               <a
                 href="#contact"
-                className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full text-sm md:text-base font-semibold hover:scale-105 transition transform"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full text-sm md:text-base font-semibold hover:scale-105 transition transform"
               >
-                📬 Contact Me
+                <Mail size={18} /> Contact Me
               </a>
 
               <a
                 href="#projects"
-                className="px-6 py-3 border border-blue-400 text-blue-300 rounded-full text-sm md:text-base font-semibold hover:bg-blue-500/10 hover:scale-105 transition"
+                className="inline-flex items-center gap-2 px-6 py-3 border border-blue-400 text-blue-300 rounded-full text-sm md:text-base font-semibold hover:bg-blue-500/10 hover:scale-105 transition"
               >
-                🚀 View Work
+                <Rocket size={18} /> View Work
               </a>
 
               <a
                 href={resume}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-3 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-full text-sm md:text-base font-semibold hover:scale-105 transition transform"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-full text-sm md:text-base font-semibold hover:scale-105 transition transform"
               >
-                📄 View Resume
+                <FileText size={18} /> View Resume
               </a>
             </div>
 
@@ -204,7 +200,7 @@ function App() {
                 <FaGithub />
               </a>
               <a
-                href="https://linkedin.com/in/sk-nadeem-ahammad-1035a4345"
+                href="https://www.linkedin.com/in/nadeem-shaikh-1035a4345/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-white hover:scale-110 transition"
@@ -212,12 +208,12 @@ function App() {
                 <FaLinkedin />
               </a>
               <a
-                href="https://x.com/nadeem_webdev"
+                href="https://www.instagram.com/nadeem_7_shaikh/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-white hover:scale-110 transition"
               >
-                <FaTwitter />
+                <FaInstagram />
               </a>
             </div>
           </div>
@@ -339,7 +335,7 @@ function App() {
               {/* Languages */}
               <div className="flex flex-col items-center transform hover:scale-110 transition-all duration-500">
                 <div className="bg-gradient-to-tr from-pink-500 to-purple-500 p-4 rounded-full shadow-xl transform hover:rotate-6 transition-all duration-500">
-                  <span className="text-white text-2xl">💻</span>
+                  <Laptop size={32} className="text-white" />
                 </div>
                 <h3 className="text-2xl font-semibold text-white mt-6 mb-4">
                   Languages
@@ -367,7 +363,7 @@ function App() {
               {/* Web Technologies */}
               <div className="flex flex-col items-center transform hover:scale-110 transition-all duration-500">
                 <div className="bg-gradient-to-tr from-blue-500 to-teal-400 p-4 rounded-full shadow-xl transform hover:rotate-6 transition-all duration-500">
-                  <span className="text-white text-2xl">⚙️</span>
+                  <Globe size={32} className="text-white" />
                 </div>
                 <h3 className="text-2xl font-semibold text-white mt-6 mb-4 text-center">
                   Web Technologies
@@ -398,7 +394,7 @@ function App() {
               {/* Databases */}
               <div className="flex flex-col items-center transform hover:scale-110 transition-all duration-500">
                 <div className="bg-gradient-to-tr from-lime-200 via-emerald-300 to-green-400 p-4 rounded-full shadow-xl transform hover:rotate-6 transition-all duration-500">
-                  <span className="text-white text-2xl">📦</span>
+                  <Database size={32} className="text-white" />
                 </div>
                 <h3 className="text-2xl font-semibold text-white mt-6 mb-4">
                   Databases
@@ -426,7 +422,7 @@ function App() {
               {/* Tools */}
               <div className="flex flex-col items-center transform hover:scale-110 transition-all duration-500">
                 <div className="bg-gradient-to-tr from-yellow-400 to-pink-400 p-4 rounded-full shadow-xl transform hover:rotate-12 transition-all duration-500">
-                  <span className="text-white text-2xl">🛠️</span>
+                  <Wrench size={32} className="text-white" />
                 </div>
                 <h3 className="text-2xl font-semibold text-white mt-6 mb-4">
                   Tools
@@ -465,37 +461,48 @@ function App() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 animate-slide-up">
               {[
+                // Projects from the SNA Digital portfolio
                 {
-                  title: "Bakery Shop",
+                  title: "Salon Appointment Booking",
                   description:
-                    "An unified Multicloud storage application for Google Drive and one drive.",
-                  image: "https://honey-bakery-shop.vercel.app/assets/main-BnoiELOh.png",
-                  link: "http://honey-bakery-shop.vercel.app",
+                    "Built a full-stack PERN salon booking system with live queue tracking and OTP email verification. Features an admin dashboard with Recharts analytics.",
+                  image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=800&h=400&auto=format&fit=crop",
+                  link: "https://salon-appointment-booking-system.onrender.com/",
                 },
                 {
-                  title: "FemCare",
-                  description: "AI Based Health Recommendation (GMM) .",
-                  image: food,
-                  link: "https://fem-care-five.vercel.app/",
-                },
-                {
-                  title: "MoodMate",
+                  title: "Bakery Shop Web App",
                   description:
-                    "AI based song recommendar according to your Images and voice record.Still in progress",
-                  image: song,
-                  link: "http://moodmate-beta.vercel.app",
+                    "Built a responsive bakery app with filtering by price, flavour, and other categories. Used REST APIs to fetch and display product data dynamically.",
+                  image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=800&h=400&auto=format&fit=crop",
+                  link: "https://honey-bakery-shop.vercel.app/",
                 },
                 {
-                  title: "BlackTrace",
+                  title: "Premium Realty Portal",
                   description:
-                    " Fraud Invoice Detection - A tool to detect fraud invoices.",
-                  image: fake_invoice,
-                  link: "https://invoice-detectt.netlify.app/",
+                    "A dynamic property listing application featuring advanced search filtering, high-res image galleries, and automated lead capture directly to WhatsApp.",
+                  image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&h=400&auto=format&fit=crop",
+                  link: "https://sna-real-estate-07.vercel.app/",
                 },
                 {
-                  title: "New Project coming soon",
-                  description: "Exciting project which is AI based coming soon",
-                  image: coming_soon,
+                  title: "Chat Application 2.0",
+                  description:
+                    "Built a real-time chat app with instant one-on-one messaging powered by Socket.io. Implemented secure JWT authentication with bcrypt hashing.",
+                  image: "https://images.unsplash.com/photo-1611606063065-ee7946f0787a?q=80&w=800&h=400&auto=format&fit=crop",
+                  link: "https://chat-application-2-0.onrender.com/",
+                },
+                {
+                  title: "Fitness Studio Landing Page",
+                  description:
+                    "A modern, high-performance landing page for a fitness center. Features a fully responsive layout, membership tier showcases, and an engaging UI designed to drive lead conversions.",
+                  image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&h=400&auto=format&fit=crop",
+                  link: "https://gym-site-demoo.netlify.app/",
+                },
+                {
+                  title: "Clinix OPD System",
+                  description:
+                    "Built a multi-tenant SaaS clinic management CRM featuring patient records, appointment scheduling, live OPD queue tracking, digital prescriptions, billing, role-based access, and analytics dashboards.",
+                  image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=800&h=400&auto=format&fit=crop",
+                  link: "https://clinix-jywo.onrender.com/",
                 },
               ].map((project, index) => (
                 <div
@@ -616,7 +623,7 @@ function App() {
           <div className="max-w-6xl mx-auto">
             {/* Heading */}
             <div className="flex items-center space-x-2 mb-12">
-              <span className="text-pink-500 text-2xl">📜</span>
+              <Award className="text-pink-500" size={28} />
               <h2 className="text-3xl md:text-4xl font-bold tracking-wide text-white">
                 Certifications
               </h2>
@@ -628,7 +635,7 @@ function App() {
                 {
                   title: "AWS S3 Basics",
                   provider: "Coursera ",
-                  icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
+                  icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original.svg",
                   gradient: "from-orange-500 to-red-500",
                   link: certificate1,
                 },
@@ -679,10 +686,9 @@ function App() {
                       href={cert.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-3 inline-block text-purple-400 font-medium text-sm hover:underline"
+                      className="mt-3 inline-flex items-center gap-1 text-purple-400 font-medium text-sm hover:underline"
                     >
-                      View Certificate{" "}
-                      <span className="inline-block ml-1">↗</span>
+                      View Certificate <ArrowUpRight size={16} />
                     </a>
                   </div>
                 </motion.div>
@@ -693,7 +699,7 @@ function App() {
 
         {/* Soft Skills Heading */}
         <div className="flex items-center space-x-2 mb-8 px-10">
-          <span className="text-green-400 text-2xl">🧠</span>
+          <Brain className="text-green-400" size={28} />
           <h2 className="text-3xl md:text-4xl font-bold tracking-wide text-white">
             Soft Skills
           </h2>
@@ -759,7 +765,7 @@ function App() {
                   degree: "Bachelor of Engineering (Information Technology)",
                   institution: "Theem College of Engineering",
                   period: "2021 - 2025",
-                  score: "CGPA: 7.73",
+                  score: "CGPA: 7.75",
                 },
                 {
                   degree: "Higher Secondary Certificate (HSC)",
@@ -811,7 +817,7 @@ function App() {
       {/* Footer */}
       <footer className="py-6 border-t border-blue-900/30 bg-black text-center">
         <p className="text-gray-400 text-sm">
-          © 2025 Sk Nadeem Ahammad. All rights reserved.
+          © {new Date().getFullYear()} Sk Nadeem Ahammad. All rights reserved.
         </p>
       </footer>
     </div>

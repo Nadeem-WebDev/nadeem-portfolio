@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import {  Menu,  X,  Code,  User,  Cpu,  GraduationCap,  Briefcase,  Sparkles,  Mail,  Rocket,  FileText,  Laptop,  Globe,  Database,  Wrench,  Award,  ArrowUpRight,  Brain } from "lucide-react";
+import { useState, useEffect, useCallback } from "react";
+import {  Code,  User,  GraduationCap,  Briefcase,  Sparkles,  Mail,  Rocket,  FileText,  Award,  ArrowUpRight,  Brain } from "lucide-react";
 import { FaGithub, FaLinkedin, FaEnvelope, FaInstagram } from "react-icons/fa";
 import { motion } from "framer-motion";
 
@@ -13,8 +13,21 @@ import certificate3 from "./certificates/Responsive_Web_Design_freeCodeCamp.pdf"
 import certificate4 from "./certificates/Infosys AI&ML.pdf";
 import Contact from "./Contact.jsx";
 import ProjectCard from "./ProjectCard.jsx";
-import ThemeToggle from "./ThemeToggle.jsx";
 import TextType from "./TextType.jsx";
+import Preloader from "./Preloader.jsx";
+import Navbar from "./Navbar.jsx";
+
+// The loading screen plays once per browser session (not on every reload),
+// and never for visitors who have turned off animations in their system settings
+const shouldShowPreloader = () => {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return false;
+  try {
+    return !sessionStorage.getItem("preloaderSeen");
+  } catch {
+    return true; // storage unavailable (private mode etc.) – just show it
+  }
+};
+import Skills from "./Skills.jsx";
 
 // Titles the hero cycles through with the typing effect
 const heroTitles = [
@@ -31,10 +44,6 @@ const trackHexGlow = (e) => {
   e.currentTarget.style.setProperty("--hex-x", `${e.clientX - rect.left}px`);
   e.currentTarget.style.setProperty("--hex-y", `${e.clientY - rect.top}px`);
 };
-
-// Builds a devicon SVG URL, e.g. devicon("react/react-original")
-const devicon = (path) =>
-  `https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${path}.svg`;
 
 // Projects from the SNA Digital portfolio (shown as tilt cards by ProjectCard.jsx)
 const projects = [
@@ -100,141 +109,42 @@ const projects = [
   },
 ];
 
-// Used by both the desktop navbar and the mobile side menu
-const navLinks = [
-  { href: "#home", label: "Home" },
-  { href: "#about", label: "About" },
-  { href: "#skills", label: "Skills" },
-  { href: "#projects", label: "Projects" },
-  { href: "#experience", label: "Experience" },
-  { href: "#contact", label: "Contact" },
-  { href: resume, label: "Resume" },
+// Shown as tags at the bottom of the About card
+const softSkills = [
+  "Communication",
+  "Team Collaboration",
+  "Problem Solving",
+  "Time Management",
+  "Adaptability",
+  "Critical Thinking",
+  "Creativity",
 ];
-
-// PDF links (the resume) open in a new tab
-const linkTarget = (href) =>
-  href.includes(".pdf")
-    ? { target: "_blank", rel: "noopener noreferrer" }
-    : {};
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const menuRef = useRef(null);
-  const buttonRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(shouldShowPreloader);
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        menuRef.current &&
-        buttonRef.current &&
-        !menuRef.current.contains(event.target) &&
-        !buttonRef.current.contains(event.target)
-      ) {
-        setIsMenuOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+  const handlePreloaderComplete = useCallback(() => {
+    try {
+      sessionStorage.setItem("preloaderSeen", "1");
+    } catch {
+      // storage unavailable – the preloader will just show again next time
+    }
+    setIsLoading(false);
   }, []);
 
+  // Stop the page scrolling while the mobile menu or the loading screen is open
   useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? "hidden" : "unset";
-  }, [isMenuOpen]);
-
-  // Close the mobile menu if the window is widened to desktop size (md = 768px)
-  useEffect(() => {
-    const desktop = window.matchMedia("(min-width: 768px)");
-    const handleChange = (e) => {
-      if (e.matches) setIsMenuOpen(false);
-    };
-    desktop.addEventListener("change", handleChange);
-    return () => desktop.removeEventListener("change", handleChange);
-  }, []);
+    document.body.style.overflow = isMenuOpen || isLoading ? "hidden" : "unset";
+  }, [isMenuOpen, isLoading]);
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-black text-slate-900 dark:text-white">
-      {/* Navbar */}
-      <nav className="fixed top-0 left-0 w-full z-50 bg-slate-50/80 dark:bg-black/80 backdrop-blur-md border-b border-slate-900/10 dark:border-white/10 shadow-md transition-all duration-300">
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-2 md:py-3">
-          {/* Logo */}
-          <h1 className="text-2xl md:text-3xl font-extrabold tracking-widest bg-gradient-to-r from-blue-500 to-pink-500 bg-clip-text text-transparent hover:scale-105 transition-all duration-700">
-            SNA.
-          </h1>
+      {/* Loading screen (first visit of the session only) */}
+      {isLoading && <Preloader onComplete={handlePreloaderComplete} />}
 
-          {/* Desktop Links */}
-          <div className="hidden md:flex items-center gap-6 lg:gap-8">
-            {navLinks.map(({ href, label }) => (
-              <a
-                key={label}
-                href={href}
-                {...linkTarget(href)}
-                className="text-sm font-medium tracking-wide text-slate-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300"
-              >
-                {label}
-              </a>
-            ))}
-          </div>
-
-          <div className="flex items-center space-x-3 md:space-x-4">
-            {/* Dark/light mode switch */}
-            <ThemeToggle />
-
-            {/* Hire Me Button */}
-            <a
-              href="#contact"
-              className="hidden md:inline-block px-4 py-2 text-sm rounded-full font-semibold text-white bg-gradient-to-r from-blue-500 to-pink-500 hover:scale-105 transition-all"
-            >
-              Hire Me
-            </a>
-
-            {/* Hamburger Button (mobile only) */}
-            <button
-              ref={buttonRef}
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-              className="md:hidden p-3 bg-blue-500/10 hover:bg-blue-500/20 rounded-full transition-all duration-300"
-            >
-              {isMenuOpen ? (
-                <X size={26} className="text-blue-600 dark:text-blue-400" />
-              ) : (
-                <Menu size={26} className="text-blue-600 dark:text-blue-400" />
-              )}
-            </button>
-          </div>
-        </div>
-      </nav>
-
-      {/* Side Menu (mobile only) */}
-      <div
-        className={`md:hidden fixed top-0 right-0 h-full w-80 bg-slate-50 dark:bg-black z-50 transform transition-transform duration-300 ${
-          isMenuOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-        ref={menuRef}
-      >
-        <div className="flex flex-col h-full p-8">
-          <div className="flex justify-end mb-8">
-            <button
-              onClick={() => setIsMenuOpen(false)}
-              className="p-2 hover:bg-slate-900/5 dark:hover:bg-white/5 rounded-full"
-            >
-              <X size={24} />
-            </button>
-          </div>
-          <div className="flex flex-col space-y-6">
-            {navLinks.map(({ href, label }) => (
-              <a
-                key={label}
-                href={href}
-                onClick={() => setIsMenuOpen(false)}
-                className="text-lg tracking-wide hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 border-b border-slate-900/5 dark:border-white/5 pb-2"
-                {...linkTarget(href)}
-              >
-                {label}
-              </a>
-            ))}
-          </div>
-        </div>
-      </div>
+      {/* Navbar + mobile menu */}
+      <Navbar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
 
       {/* Main Sections */}
       <main className="pt-12 md:pt-14">
@@ -407,201 +317,39 @@ function App() {
                   <span className="text-blue-600 dark:text-blue-400 font-semibold">
                     Sk Nadeem Ahammad
                   </span>{" "}
-                  — a Full Stack Developer and AI Enthusiast with a love for
-                  crafting powerful, user-friendly web applications that
-                  actually make a difference. Whether it's frontend magic or
-                  backend logic, I thrive on turning complex ideas into clean,
-                  functional digital solutions.
+                  — a Full Stack Developer and AI Enthusiast who loves crafting
+                  user-friendly web apps that make a difference. From frontend
+                  to backend, I turn complex ideas into clean, functional
+                  solutions.
                 </p>
 
                 <p className="text-lg md:text-xl text-slate-700 dark:text-blue-100 leading-relaxed mb-5">
-                  My tech journey began with a simple curiosity about how things
-                  work — now, it's evolved into a full-blown obsession with
-                  building, learning, and experimenting. I'm especially
-                  passionate about artificial intelligence, React, and anything
-                  that challenges me to think differently. Let's just say: I
-                  never stop leveling up.
+                  What started as curiosity about how things work is now an
+                  obsession with building and learning. I'm passionate about AI,
+                  React, and anything that makes me think differently — I never
+                  stop leveling up.
                 </p>
+
+                {/* Soft skills */}
+                <div className="flex items-center justify-center md:justify-start gap-2 mt-2 mb-3">
+                  <Brain className="text-green-600 dark:text-green-400" size={20} />
+                  <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-600 dark:text-gray-400">
+                    Soft Skills
+                  </h3>
+                </div>
+                <div className="flex flex-wrap justify-center md:justify-start gap-2">
+                  {softSkills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-3 py-1.5 text-sm font-medium text-slate-700 dark:text-blue-100 border border-slate-900/10 dark:border-white/10 bg-slate-900/5 dark:bg-white/5 rounded-full"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
               </motion.div>
             </div>
           </motion.div>
-        </section>
-
-        {/*Skills Section*/}
-
-        <section
-          id="skills"
-          className="relative py-24 px-6 bg-gradient-to-b from-slate-50 dark:from-black via-slate-100 dark:via-gray-900 to-slate-50 dark:to-black overflow-hidden"
-        >
-          {/* Background glow animation */}
-          <div className="absolute inset-0">
-            <div className="absolute top-1/3 left-1/4 w-80 h-80 bg-pink-500 rounded-full blur-[150px] opacity-20 animate-pulse" />
-            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600 rounded-full blur-[150px] opacity-20 animate-pulse" />
-          </div>
-
-          <motion.div
-            className="relative z-10 max-w-7xl mx-auto"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            viewport={{ once: true }}
-          >
-            {/* Section Header */}
-            <div className="flex flex-col items-center space-y-3 mb-16">
-              <div className="flex items-center space-x-3">
-                <Cpu className="text-blue-600 dark:text-blue-400" size={32} />
-                <h2 className="text-4xl md:text-5xl font-extrabold tracking-wide text-slate-900 dark:text-white">
-                  Skills
-                </h2>
-              </div>
-              <p className="text-slate-600 dark:text-gray-400 text-center max-w-xl">
-                Here are the technologies and tools I've mastered to build
-                modern web experiences.
-              </p>
-            </div>
-
-            {/* Skills Categories */}
-            <div className="grid md:grid-cols-4 gap-10">
-              {/* Languages */}
-              <div className="flex flex-col items-center transform hover:scale-110 transition-all duration-500">
-                <div className="bg-gradient-to-tr from-pink-500 to-purple-500 p-4 rounded-full shadow-xl transform hover:rotate-6 transition-all duration-500">
-                  <Laptop size={32} className="text-white" />
-                </div>
-                <h3 className="text-2xl font-semibold text-slate-900 dark:text-white mt-6 mb-4">
-                  Languages
-                </h3>
-                <div className="flex flex-wrap justify-center gap-3">
-                  {[
-                    { name: "JavaScript", icon: devicon("javascript/javascript-original") },
-                    { name: "PHP", icon: devicon("php/php-original") },
-                    { name: "SQL", icon: devicon("azuresqldatabase/azuresqldatabase-original") },
-                    { name: "Python", icon: devicon("python/python-original") },
-                    { name: "C", icon: devicon("c/c-original") },
-                  ].map((skill) => (
-                    <div
-                      key={skill.name}
-                      className="px-4 py-4 bg-slate-900/5 dark:bg-white/10 text-slate-900 dark:text-white rounded-full border border-slate-900/10 dark:border-white/20 text-sm font-semibold hover:bg-pink-400 hover:text-white transition-all duration-300 backdrop-blur-md shadow-md"
-                    >
-                      <abbr title={skill.name}>
-                        <img src={skill.icon} alt={skill.name} className="w-7 h-7 text-blue-500" />
-                      </abbr>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Web Technologies */}
-              <div className="flex flex-col items-center transform hover:scale-110 transition-all duration-500">
-                <div className="bg-gradient-to-tr from-blue-500 to-teal-400 p-4 rounded-full shadow-xl transform hover:rotate-6 transition-all duration-500">
-                  <Globe size={32} className="text-white" />
-                </div>
-                <h3 className="text-2xl font-semibold text-slate-900 dark:text-white mt-6 mb-4 text-center">
-                  Web Technologies
-                </h3>
-                <div className="flex flex-wrap justify-center gap-3">
-                  {[
-                    // Frontend
-                    { name: "React.js", icon: devicon("react/react-original") },
-                    { name: "HTML5", icon: devicon("html5/html5-original") },
-                    { name: "CSS3", icon: devicon("css3/css3-original") },
-                    { name: "Tailwind CSS", icon: devicon("tailwindcss/tailwindcss-original") },
-                    // Backend
-                    { name: "Node.js", icon: devicon("nodejs/nodejs-original") },
-                    { name: "Express.js", icon: devicon("express/express-original") },
-                    { name: "REST APIs", icon: "https://media.lordicon.com/icons/wired/gradient/1330-rest-api.svg" },
-                    { name: "JWT Authentication", icon: devicon("jwt/jwt-original") },
-                  ].map((skill) => (
-                    <div
-                      key={skill.name}
-                      className="px-4 py-4 bg-slate-900/5 dark:bg-white/10 text-slate-900 dark:text-white rounded-full border border-slate-900/10 dark:border-white/20 text-sm font-semibold hover:bg-blue-500 hover:text-white transition-all duration-300 backdrop-blur-md shadow-md"
-                    >
-                      <abbr title={skill.name}>
-                        <img src={skill.icon} alt={skill.name} className="w-7 h-7 text-blue-500" />
-                      </abbr>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Databases */}
-              <div className="flex flex-col items-center transform hover:scale-110 transition-all duration-500">
-                <div className="bg-gradient-to-tr from-lime-200 via-emerald-300 to-green-400 p-4 rounded-full shadow-xl transform hover:rotate-6 transition-all duration-500">
-                  <Database size={32} className="text-white" />
-                </div>
-                <h3 className="text-2xl font-semibold text-slate-900 dark:text-white mt-6 mb-4">
-                  Databases
-                </h3>
-                <div className="flex flex-wrap justify-center gap-3">
-                  {[
-                    { name: "PostgreSQL", icon: devicon("postgresql/postgresql-original") },
-                    { name: "MySQL", icon: devicon("mysql/mysql-original") },
-                    { name: "MongoDB", icon: devicon("mongodb/mongodb-original") },
-                    { name: "SQLite", icon: devicon("sqlite/sqlite-original") },
-                    { name: "ClickHouse", icon: devicon("clickhouse/clickhouse-original") },
-                  ].map(
-                    (skill) => (
-                      <div
-                        key={skill.name}
-                        className="px-4 py-4 bg-slate-900/5 dark:bg-white/10 text-slate-900 dark:text-white rounded-full border border-slate-900/10 dark:border-white/20 text-sm font-semibold hover:bg-green-400 hover:text-white transition-all duration-300 backdrop-blur-md shadow-md"
-                      >
-                        <abbr title={skill.name}>
-                          <img src={skill.icon} alt={skill.name} className="w-7 h-7 text-blue-500" />
-                        </abbr>
-                      </div>
-                    )
-                  )}
-                </div>
-              </div>
-
-              {/* Tools */}
-              <div className="flex flex-col items-center transform hover:scale-110 transition-all duration-500">
-                <div className="bg-gradient-to-tr from-yellow-400 to-pink-400 p-4 rounded-full shadow-xl transform hover:rotate-12 transition-all duration-500">
-                  <Wrench size={32} className="text-white" />
-                </div>
-                <h3 className="text-2xl font-semibold text-slate-900 dark:text-white mt-6 mb-4 text-center">
-                  Tools & Platforms
-                </h3>
-                <div className="flex flex-wrap justify-center gap-3">
-                  {[
-                    { name: "Git", icon: devicon("git/git-original") },
-                    { name: "GitHub", icon: devicon("github/github-original") },
-                    { name: "GitLab", icon: devicon("gitlab/gitlab-original") },
-                    { name: "Linux", icon: devicon("linux/linux-original") },
-                    { name: "Sentry", icon: devicon("sentry/sentry-original") },
-                    { name: "Postman", icon: devicon("postman/postman-original") },
-                    { name: "VS Code", icon: devicon("vscode/vscode-original") },
-                  ].map((skill) => (
-                    <div
-                      key={skill.name}
-                      className="px-4 py-4 bg-slate-900/5 dark:bg-white/10 text-slate-900 dark:text-white rounded-full border border-slate-900/10 dark:border-white/20 text-sm font-semibold hover:bg-yellow-400 hover:text-white hover:border-yellow-400 transition-all duration-300 backdrop-blur-md shadow-md"
-                    >
-                      <abbr title={skill.name}>
-                        <img src={skill.icon} alt={skill.name} className="w-7 h-7 text-blue-500" />
-                      </abbr>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </section>
-
-        {/* Projects Section */}
-        <section id="projects" className="py-16 md:py-20 px-4 bg-slate-50 dark:bg-black">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex items-center space-x-2 mb-8 md:mb-12">
-              <Code className="text-blue-600 dark:text-blue-500" size={28} />
-              <h2 className="text-3xl md:text-4xl font-bold tracking-wide text-slate-900 dark:text-white">
-                Featured Projects
-              </h2>
-            </div>
-            {/* items-stretch makes every card in a row as tall as the tallest one */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 items-stretch">
-              {projects.map((project) => (
-                <ProjectCard key={project.title} project={project} />
-              ))}
-            </div>
-          </div>
         </section>
 
         {/* Experience Section */}
@@ -720,6 +468,105 @@ function App() {
           </motion.div>
         </section>
 
+        {/* Projects Section */}
+        <section id="projects" className="py-16 md:py-20 px-4 bg-slate-50 dark:bg-black">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-center space-x-2 mb-8 md:mb-12">
+              <Code className="text-blue-600 dark:text-blue-500" size={28} />
+              <h2 className="text-3xl md:text-4xl font-bold tracking-wide text-slate-900 dark:text-white">
+                Featured Projects
+              </h2>
+            </div>
+            {/* items-stretch makes every card in a row as tall as the tallest one */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 items-stretch">
+              {projects.map((project) => (
+                <ProjectCard key={project.title} project={project} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Skills Section */}
+        <Skills />
+
+        {/*Education*/}
+        <section
+          id="education"
+          className="relative py-20 px-4 bg-slate-50 dark:bg-black overflow-hidden"
+        >
+          {/* Background Glows */}
+          <div className="absolute inset-0">
+            <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-pink-600 rounded-full blur-3xl opacity-10 animate-pulse" />
+            <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-blue-500 rounded-full blur-3xl opacity-10 animate-pulse" />
+          </div>
+
+          <motion.div
+            className="relative z-10 max-w-4xl mx-auto"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            {/* Section Heading */}
+            <div className="flex items-center space-x-2 mb-12">
+              <GraduationCap className="text-blue-500" size={28} />
+              <h2 className="text-3xl md:text-4xl font-bold tracking-wide text-slate-900 dark:text-white">
+                Education
+              </h2>
+            </div>
+
+            {/* Vertical Timeline Line */}
+            <div className="relative border-l-2 border-blue-500/30 pl-6 space-y-12">
+              {[
+                {
+                  degree: "Bachelor of Engineering (Information Technology)",
+                  institution: "Theem College of Engineering",
+                  period: "2021 - 2025",
+                  score: "CGPA: 7.75",
+                },
+                {
+                  degree: "Higher Secondary Certificate (HSC)",
+                  institution: "Thakur College of Science & Commerce",
+                  period: "2021",
+                  score: "Percentage: 81.67%",
+                },
+                {
+                  degree: "Secondary School Certificate (SSC)",
+                  institution: "S.S. Patna High School",
+                  period: "2019",
+                  score: "Percentage: 79.86%",
+                },
+              ].map((edu, index) => (
+                <motion.div
+                  key={edu.degree}
+                  className="relative ml-4"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.2 }}
+                  viewport={{ once: true }}
+                >
+                  {/* Timeline Dot */}
+                  <div className="absolute -left-[33px] top-1.5 w-5 h-5 bg-blue-500 border-4 border-slate-50 dark:border-black rounded-full shadow-lg" />
+
+                  {/* Card Content */}
+                  <div className="p-5 md:p-6 bg-slate-900/5 dark:bg-white/5 border border-slate-900/10 dark:border-white/10 rounded-xl backdrop-blur-xl shadow-xl hover:bg-slate-900/10 dark:hover:bg-white/10 transition-all duration-300 transform hover:scale-105">
+                    <h3 className="text-xl md:text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">
+                      {edu.degree}
+                    </h3>
+                    <div className="flex justify-between text-xs md:text-sm text-slate-600 dark:text-blue-200 mb-3">
+                      <span>{edu.institution}</span>
+                      <span>{edu.period}</span>
+                    </div>
+                    <p className="text-sm md:text-base text-slate-700 dark:text-blue-100/90">
+                      {edu.score}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </section>
+
         {/*certificate section*/}
         <section
           id="certifications"
@@ -800,119 +647,6 @@ function App() {
               ))}
             </div>
           </div>
-        </section>
-
-        {/* Soft Skills Heading */}
-        <div className="flex items-center space-x-2 mb-8 px-10">
-          <Brain className="text-green-600 dark:text-green-400" size={28} />
-          <h2 className="text-3xl md:text-4xl font-bold tracking-wide text-slate-900 dark:text-white">
-            Soft Skills
-          </h2>
-        </div>
-
-        {/* Soft Skills Grid */}
-        <motion.div
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 px-10"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          {[
-            "Communication",
-            "Team Collaboration",
-            "Problem Solving",
-            "Time Management",
-            "Adaptability",
-            "Critical Thinking",
-            "Creativity",
-            "Leadership",
-          ].map((skill) => (
-            <div
-              key={skill}
-              className="text-center px-4 py-3 text-sm font-medium text-slate-700 dark:text-blue-100 border border-slate-900/10 dark:border-white/10 bg-slate-900/5 dark:bg-white/5 rounded-lg backdrop-blur-md hover:bg-slate-900/10 dark:hover:bg-white/10 transition"
-            >
-              {skill}
-            </div>
-          ))}
-        </motion.div>
-
-        {/*Education*/}
-        <section
-          id="education"
-          className="relative py-20 px-4 bg-slate-50 dark:bg-black overflow-hidden"
-        >
-          {/* Background Glows */}
-          <div className="absolute inset-0">
-            <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-pink-600 rounded-full blur-3xl opacity-10 animate-pulse" />
-            <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-blue-500 rounded-full blur-3xl opacity-10 animate-pulse" />
-          </div>
-
-          <motion.div
-            className="relative z-10 max-w-4xl mx-auto"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            {/* Section Heading */}
-            <div className="flex items-center space-x-2 mb-12">
-              <GraduationCap className="text-blue-500" size={28} />
-              <h2 className="text-3xl md:text-4xl font-bold tracking-wide text-slate-900 dark:text-white">
-                Education
-              </h2>
-            </div>
-
-            {/* Vertical Timeline Line */}
-            <div className="relative border-l-2 border-blue-500/30 pl-6 space-y-12">
-              {[
-                {
-                  degree: "Bachelor of Engineering (Information Technology)",
-                  institution: "Theem College of Engineering",
-                  period: "2021 - 2025",
-                  score: "CGPA: 7.75",
-                },
-                {
-                  degree: "Higher Secondary Certificate (HSC)",
-                  institution: "Thakur College of Science & Commerce",
-                  period: "2021",
-                  score: "Percentage: 81.67%",
-                },
-                {
-                  degree: "Secondary School Certificate (SSC)",
-                  institution: "S.S. Patna High School",
-                  period: "2019",
-                  score: "Percentage: 79.86%",
-                },
-              ].map((edu, index) => (
-                <motion.div
-                  key={edu.degree}
-                  className="relative ml-4"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.2 }}
-                  viewport={{ once: true }}
-                >
-                  {/* Timeline Dot */}
-                  <div className="absolute -left-[33px] top-1.5 w-5 h-5 bg-blue-500 border-4 border-slate-50 dark:border-black rounded-full shadow-lg" />
-
-                  {/* Card Content */}
-                  <div className="p-5 md:p-6 bg-slate-900/5 dark:bg-white/5 border border-slate-900/10 dark:border-white/10 rounded-xl backdrop-blur-xl shadow-xl hover:bg-slate-900/10 dark:hover:bg-white/10 transition-all duration-300 transform hover:scale-105">
-                    <h3 className="text-xl md:text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-                      {edu.degree}
-                    </h3>
-                    <div className="flex justify-between text-xs md:text-sm text-slate-600 dark:text-blue-200 mb-3">
-                      <span>{edu.institution}</span>
-                      <span>{edu.period}</span>
-                    </div>
-                    <p className="text-sm md:text-base text-slate-700 dark:text-blue-100/90">
-                      {edu.score}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
         </section>
 
         {/* Contact Section */}

@@ -1,20 +1,17 @@
 import { useState, useEffect, useCallback } from "react";
-import {  Sparkles,  Mail,  Rocket,  FileText,  Award,  ArrowUpRight } from "lucide-react";
+import {  Sparkles,  Mail,  Rocket,  FileText } from "lucide-react";
 import { FaGithub, FaLinkedin, FaEnvelope, FaInstagram } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 import nadImage from "./images/profile picture.jpg";
 
 import resume from "./certificates/Nadeem_Resume.pdf";
-import certificate1 from "./certificates/Coursera AWS S3 Basics.pdf";
-import certificate2 from "./certificates/Data Science using python.pdf";
-import certificate3 from "./certificates/Responsive_Web_Design_freeCodeCamp.pdf";
-import certificate4 from "./certificates/Infosys AI&ML.pdf";
 import Contact from "./Contact.jsx";
 import Projects from "./Projects.jsx";
 import Experience from "./Experience.jsx";
 import About from "./About.jsx";
 import Education from "./Education.jsx";
+import Certifications from "./Certifications.jsx";
 import VisitCounter from "./VisitCounter.jsx";
 import TextType from "./TextType.jsx";
 import Preloader from "./Preloader.jsx";
@@ -208,87 +205,8 @@ function App() {
         {/* Education Section */}
         <Education />
 
-        {/*certificate section*/}
-        <section
-          id="certifications"
-          className="py-20 px-4 bg-gradient-to-b from-slate-100 dark:from-[#0f0f0f] to-slate-50 dark:to-black"
-        >
-          <div className="max-w-6xl mx-auto">
-            {/* Heading */}
-            <div className="flex items-center space-x-2 mb-12">
-              <Award className="text-pink-500" size={28} />
-              <h2 className="text-3xl md:text-4xl font-bold tracking-wide text-slate-900 dark:text-white">
-                Certifications
-              </h2>
-            </div>
-
-            {/* Certificates Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {[
-                {
-                  title: "AWS S3 Basics",
-                  provider: "Coursera ",
-                  icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original.svg",
-                  gradient: "from-orange-500 to-red-500",
-                  link: certificate1,
-                },
-                {
-                  title: "Data Science using Python",
-                  provider: "LivetechINDIA",
-                  icon: "https://cdn-icons-png.flaticon.com/512/5408/5408783.png",
-                  gradient: "from-blue-400 to-cyan-500",
-                  link: certificate2,
-                },
-                {
-                  title: "Responsive Web Design",
-                  provider: "freeCodeCamp",
-                  icon: "https://cdn-icons-png.flaticon.com/512/2504/2504196.png",
-                  gradient: "from-blue-600 to-indigo-500",
-                  link: certificate3,
-                },
-                {
-                  title: "Artificial Intelligence & Machine Learning",
-                  provider: "Infosys Springboard",
-                  icon: "https://cdn-icons-png.flaticon.com/512/8637/8637099.png",
-                  gradient: "from-green-400 to-blue-500",
-                  link: certificate4,
-                },
-              ].map((cert, index) => (
-                <motion.div
-                  key={index}
-                  className="bg-slate-900/5 dark:bg-white/5 border border-slate-900/10 dark:border-white/10  backdrop-blur-xl shadow-xl hover:bg-slate-900/10 dark:hover:bg-white/10 transition-all duration-300 transform hover:scale-105 rounded-2xl overflow-hidden bg-white dark:bg-[#111111] "
-                  variants={{
-                    hidden: { opacity: 0, y: 20 },
-                    visible: { opacity: 1, y: 0 },
-                  }}
-                >
-                  {/* Gradient Header */}
-                  <div
-                    className={`p-6 bg-gradient-to-r ${cert.gradient} flex items-center`}
-                  >
-                    <img src={cert.icon} alt="icon" className="w-10 h-10" />
-                  </div>
-
-                  {/* Certificate Details */}
-                  <div className="p-6">
-                    <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-1">
-                      {cert.title}
-                    </h3>
-                    <p className="text-sm text-slate-600 dark:text-gray-400">{cert.provider}</p>
-                    <a
-                      href={cert.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-3 inline-flex items-center gap-1 text-purple-600 dark:text-purple-400 font-medium text-sm hover:underline"
-                    >
-                      View Certificate <ArrowUpRight size={16} />
-                    </a>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* Certifications Section */}
+        <Certifications />
 
         {/* Contact Section */}
         <Contact />

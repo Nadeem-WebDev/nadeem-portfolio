@@ -52,9 +52,10 @@ export default async function handler(req, res) {
       return res.status(502).json({ error: "Could not load visit counts" });
     }
 
-    // Cache at Vercel's edge for 5 minutes (and serve the old value for up to
-    // 10 more while refreshing), so the analytics API isn't called on every visit
-    res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=600");
+    // Cache at Vercel's edge for 1 minute (and serve the old value for up to
+    // 2 more while refreshing), so the analytics API is called at most about
+    // once a minute instead of on every visit
+    res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=120");
     return res.status(200).json({ pageviews, visitors });
   } catch (error) {
     console.error("Failed to reach Vercel Analytics API:", error);

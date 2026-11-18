@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import {  Code,  User,  GraduationCap,  Briefcase,  Sparkles,  Mail,  Rocket,  FileText,  Award,  ArrowUpRight,  Brain } from "lucide-react";
+import {  User,  GraduationCap,  Briefcase,  Sparkles,  Mail,  Rocket,  FileText,  Award,  ArrowUpRight,  Brain } from "lucide-react";
 import { FaGithub, FaLinkedin, FaEnvelope, FaInstagram } from "react-icons/fa";
 import { motion } from "framer-motion";
 
@@ -12,7 +12,7 @@ import certificate2 from "./certificates/Data Science using python.pdf";
 import certificate3 from "./certificates/Responsive_Web_Design_freeCodeCamp.pdf";
 import certificate4 from "./certificates/Infosys AI&ML.pdf";
 import Contact from "./Contact.jsx";
-import ProjectCard from "./ProjectCard.jsx";
+import Projects from "./Projects.jsx";
 import TextType from "./TextType.jsx";
 import Preloader from "./Preloader.jsx";
 import Navbar from "./Navbar.jsx";
@@ -44,70 +44,6 @@ const trackHexGlow = (e) => {
   e.currentTarget.style.setProperty("--hex-x", `${e.clientX - rect.left}px`);
   e.currentTarget.style.setProperty("--hex-y", `${e.clientY - rect.top}px`);
 };
-
-// Projects from the SNA Digital portfolio (shown as tilt cards by ProjectCard.jsx)
-const projects = [
-  {
-    title: "Clinix OPD System",
-    description:
-      "Multi-tenant clinic management CRM with patient records, appointments, a live OPD queue, digital prescriptions, billing and role-based access.",
-    tags: ["React.js", "Node.js", "Express.js", "MongoDB", "Tailwind CSS", "JWT", "Cloudinary"],
-    metric: "Full-Stack SaaS",
-    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=800&h=400&auto=format&fit=crop",
-    liveUrl: "https://clinix-jywo.onrender.com/",
-    githubUrl: "https://github.com/Nadeem-WebDev/clinix",
-  },
-  {
-    title: "Salon Appointment Booking",
-    description:
-      "Full-stack PERN salon booking system with Razorpay payments, live queue tracking, OTP email verification and an admin dashboard with analytics.",
-    tags: ["Node.js", "Express.js", "PostgreSQL", "Recharts", "JWT", "Razorpay", "PDFKit"],
-    metric: "Full-Stack",
-    image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=800&h=400&auto=format&fit=crop",
-    liveUrl: "https://salon-appointment-booking-system.onrender.com/",
-    githubUrl: "https://github.com/Nadeem-WebDev/salon-appointment-booking-system",
-  },
-  {
-    title: "Chat Application 2.0",
-    description:
-      "Real-time one-on-one chat app powered by Socket.io, with secure JWT authentication and bcrypt password hashing.",
-    tags: ["Node.js", "Express.js", "MongoDB", "Socket.io", "Daisy UI"],
-    metric: "Real-Time",
-    image: "https://images.unsplash.com/photo-1611606063065-ee7946f0787a?q=80&w=800&h=400&auto=format&fit=crop",
-    liveUrl: "https://chat-application-2-0.onrender.com/",
-    githubUrl: "https://github.com/Nadeem-WebDev/chat-application-2.0",
-  },
-  {
-    title: "Bakery Shop Web App",
-    description:
-      "Responsive bakery storefront that fetches products from a REST API, with filtering by price, flavour and category.",
-    tags: ["React.js", "Tailwind CSS", "Vite", "REST API"],
-    metric: "Dynamic UI",
-    image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=800&h=400&auto=format&fit=crop",
-    liveUrl: "https://honey-bakery-shop.vercel.app/",
-    githubUrl: "https://github.com/Nadeem-WebDev/bakery-shop",
-  },
-  {
-    title: "Premium Realty Portal",
-    description:
-      "Property listing app with advanced search filters, high-res image galleries and automated lead capture straight to WhatsApp.",
-    tags: ["React.js", "Tailwind CSS", "GSAP", "Framer Motion", "Lenis"],
-    metric: "+45% Conversions",
-    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&h=400&auto=format&fit=crop",
-    liveUrl: "https://sna-real-estate-07.vercel.app/",
-    githubUrl: "https://github.com/Nadeem-WebDev/real-estate",
-  },
-  {
-    title: "Fitness Studio Landing Page",
-    description:
-      "High-performance, fully responsive landing page for a fitness center, with membership tiers and a UI built to drive sign-ups.",
-    tags: ["React.js", "Tailwind CSS", "Framer Motion", "Lucide React"],
-    metric: "High Conversion UI",
-    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&h=400&auto=format&fit=crop",
-    liveUrl: "https://gym-site-demoo.netlify.app/",
-    githubUrl: "https://github.com/Nadeem-WebDev/gym-site-demo",
-  },
-];
 
 // Shown as tags at the bottom of the About card
 const softSkills = [
@@ -469,22 +405,7 @@ function App() {
         </section>
 
         {/* Projects Section */}
-        <section id="projects" className="py-16 md:py-20 px-4 bg-slate-50 dark:bg-black">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex items-center space-x-2 mb-8 md:mb-12">
-              <Code className="text-blue-600 dark:text-blue-500" size={28} />
-              <h2 className="text-3xl md:text-4xl font-bold tracking-wide text-slate-900 dark:text-white">
-                Featured Projects
-              </h2>
-            </div>
-            {/* items-stretch makes every card in a row as tall as the tallest one */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 items-stretch">
-              {projects.map((project) => (
-                <ProjectCard key={project.title} project={project} />
-              ))}
-            </div>
-          </div>
-        </section>
+        <Projects />
 
         {/* Skills Section */}
         <Skills />

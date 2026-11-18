@@ -1,10 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
-import {  User,  GraduationCap,  Briefcase,  Sparkles,  Mail,  Rocket,  FileText,  Award,  ArrowUpRight,  Brain } from "lucide-react";
+import {  GraduationCap,  Sparkles,  Mail,  Rocket,  FileText,  Award,  ArrowUpRight } from "lucide-react";
 import { FaGithub, FaLinkedin, FaEnvelope, FaInstagram } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 import nadImage from "./images/profile picture.jpg";
-import rockSolidLogo from "./images/rock-solid-logo.png";
 
 import resume from "./certificates/Nadeem_Resume.pdf";
 import certificate1 from "./certificates/Coursera AWS S3 Basics.pdf";
@@ -13,6 +12,8 @@ import certificate3 from "./certificates/Responsive_Web_Design_freeCodeCamp.pdf"
 import certificate4 from "./certificates/Infosys AI&ML.pdf";
 import Contact from "./Contact.jsx";
 import Projects from "./Projects.jsx";
+import Experience from "./Experience.jsx";
+import About from "./About.jsx";
 import TextType from "./TextType.jsx";
 import Preloader from "./Preloader.jsx";
 import Navbar from "./Navbar.jsx";
@@ -44,17 +45,6 @@ const trackHexGlow = (e) => {
   e.currentTarget.style.setProperty("--hex-x", `${e.clientX - rect.left}px`);
   e.currentTarget.style.setProperty("--hex-y", `${e.clientY - rect.top}px`);
 };
-
-// Shown as tags at the bottom of the About card
-const softSkills = [
-  "Communication",
-  "Team Collaboration",
-  "Problem Solving",
-  "Time Management",
-  "Adaptability",
-  "Critical Thinking",
-  "Creativity",
-];
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -195,214 +185,11 @@ function App() {
           </div>
         </section>
 
-        {/*aboout*/}
-
-        <section
-          id="about"
-          className="relative py-20 px-4 bg-slate-50 dark:bg-black overflow-hidden"
-        >
-          {/* Background glow animation */}
-          <div className="absolute inset-0">
-            <div className="absolute top-1/3 left-1/4 w-72 h-72 bg-purple-700 rounded-full blur-3xl opacity-20 animate-pulse" />
-            <div className="absolute bottom-1/4 right-1/3 w-96 h-96 bg-blue-500 rounded-full blur-3xl opacity-10 animate-pulse" />
-          </div>
-
-          <motion.div
-            className="relative z-10 max-w-7xl mx-auto"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            {/* Section Header */}
-            <div className="flex items-center justify-center space-x-2 mb-12">
-              <User className="text-blue-500" size={28} />
-              <h2 className="text-3xl md:text-4xl font-bold tracking-wide text-slate-900 dark:text-white">
-                About Me
-              </h2>
-            </div>
-
-            {/* Main Content */}
-            <div className="flex flex-col md:flex-row items-center justify-center gap-12">
-              {/* Image */}
-
-              <motion.div
-                className="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-blue-500 shadow-[0_0_20px_4px_rgba(59,130,246,0.6)] hover:shadow-[0_0_25px_8px_rgba(59,130,246,0.8)] transition-shadow duration-500 ease-in-out hover:scale-105"
-                initial={{ scale: 0.9, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.2, duration: 0.6 }}
-                viewport={{ once: true }}
-              >
-                <img
-                  src={nadImage}
-                  className="w-full h-full object-cover object-[0px_-45px]"
-                  alt="Nadeem"
-                />
-              </motion.div>
-
-              {/* Text & Cards */}
-              <motion.div
-                className="max-w-xl text-center md:text-left md:max-w-3xl backdrop-blur-xl bg-slate-900/5 dark:bg-white/5 p-8 rounded-3xl border border-slate-900/10 dark:border-white/10 shadow-2xl"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.8 }}
-                viewport={{ once: true }}
-              >
-                <p className="text-lg md:text-xl text-slate-700 dark:text-blue-100 leading-relaxed mb-5">
-                  Hey, I'm{" "}
-                  <span className="text-blue-600 dark:text-blue-400 font-semibold">
-                    Sk Nadeem Ahammad
-                  </span>{" "}
-                  — a Full Stack Developer and AI Enthusiast who loves crafting
-                  user-friendly web apps that make a difference. From frontend
-                  to backend, I turn complex ideas into clean, functional
-                  solutions.
-                </p>
-
-                <p className="text-lg md:text-xl text-slate-700 dark:text-blue-100 leading-relaxed mb-5">
-                  What started as curiosity about how things work is now an
-                  obsession with building and learning. I'm passionate about AI,
-                  React, and anything that makes me think differently — I never
-                  stop leveling up.
-                </p>
-
-                {/* Soft skills */}
-                <div className="flex items-center justify-center md:justify-start gap-2 mt-2 mb-3">
-                  <Brain className="text-green-600 dark:text-green-400" size={20} />
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-600 dark:text-gray-400">
-                    Soft Skills
-                  </h3>
-                </div>
-                <div className="flex flex-wrap justify-center md:justify-start gap-2">
-                  {softSkills.map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-3 py-1.5 text-sm font-medium text-slate-700 dark:text-blue-100 border border-slate-900/10 dark:border-white/10 bg-slate-900/5 dark:bg-white/5 rounded-full"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
-        </section>
+        {/* About Section */}
+        <About />
 
         {/* Experience Section */}
-        <section
-          id="experience"
-          className="relative py-20 px-4 bg-slate-50 dark:bg-black overflow-hidden"
-        >
-          <div className="absolute inset-0">
-            <div className="absolute top-1/4 left-1/3 w-72 h-72 bg-blue-700 rounded-full blur-3xl opacity-10 animate-pulse" />
-            <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-purple-600 rounded-full blur-3xl opacity-10 animate-pulse" />
-          </div>
-
-          <motion.div
-            className="relative z-10 max-w-5xl mx-auto"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <div className="flex items-center space-x-2 mb-12">
-              <Briefcase className="text-blue-500" size={28} />
-              <h2 className="text-3xl md:text-4xl font-bold tracking-wide text-slate-900 dark:text-white">
-                Experience
-              </h2>
-            </div>
-
-            {/* Experience Cards */}
-            <div className="space-y-6 md:space-y-8">
-              {[
-                {
-                  role: "Full Stack Developer (Intern)",
-                  company: "Rock Solid Solutions",
-                  period: "Aug 2025 – Nov 2026",
-                  logo: rockSolidLogo,
-                  points: [
-                    <>
-                      Shipped <strong className="text-slate-900 dark:text-white">250+ merge requests</strong> across 16 production repositories.
-                    </>,
-                    <>
-                      Sped up a slow database job from <strong className="text-slate-900 dark:text-white">15+ min to 55 s</strong>.
-                    </>,
-                    <>
-                      Fixed <strong className="text-slate-900 dark:text-white">150+ production issues</strong> and patched security vulnerabilities.
-                    </>,
-                    <>
-                      Built customer features like automated domain-renewal reminder emails.
-                    </>,
-                  ],
-                  tech: ["PHP", "JavaScript", "PostgreSQL", "ClickHouse", "Sentry"],
-                },
-              ].map((exp) => (
-                <motion.div
-                  key={exp.company}
-                  className="p-6 md:p-8 bg-slate-900/5 dark:bg-white/5 border border-slate-900/10 dark:border-white/10 rounded-xl backdrop-blur-xl shadow-xl hover:bg-slate-900/10 dark:hover:bg-white/10 transition-all duration-300"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  viewport={{ once: true }}
-                >
-                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-1 md:gap-4 mb-4">
-                    <div className="flex items-center gap-4">
-                      {/* Company logo (falls back to initials if there's no logo) */}
-                      <div
-                        className={`w-14 h-14 flex-shrink-0 rounded-xl flex items-center justify-center overflow-hidden shadow-md ${
-                          exp.logo ? "border border-white/10" : "bg-white"
-                        }`}
-                      >
-                        {exp.logo ? (
-                          <img
-                            src={exp.logo}
-                            alt={`${exp.company} logo`}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <span className="text-lg font-extrabold text-blue-600">
-                            {exp.company
-                              .split(" ")
-                              .map((word) => word[0])
-                              .join("")}
-                          </span>
-                        )}
-                      </div>
-                      <div>
-                        <h3 className="text-xl md:text-2xl font-bold text-blue-600 dark:text-blue-400">
-                          {exp.role}
-                        </h3>
-                        <p className="text-base md:text-lg text-slate-600 dark:text-blue-200">
-                          {exp.company}
-                        </p>
-                      </div>
-                    </div>
-                    <span className="text-xs md:text-sm text-slate-600 dark:text-blue-200 whitespace-nowrap md:pt-2">
-                      {exp.period}
-                    </span>
-                  </div>
-
-                  <ul className="list-disc pl-5 space-y-2 text-sm md:text-base text-slate-700 dark:text-blue-100/90 marker:text-blue-500">
-                    {exp.points.map((point, i) => (
-                      <li key={i}>{point}</li>
-                    ))}
-                  </ul>
-
-                  <div className="flex flex-wrap gap-2 mt-6">
-                    {exp.tech.map((t) => (
-                      <span
-                        key={t}
-                        className="px-3 py-1 text-xs font-medium text-slate-700 dark:text-blue-100 bg-blue-500/10 border border-blue-500/30 rounded-full"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </section>
+        <Experience />
 
         {/* Projects Section */}
         <Projects />

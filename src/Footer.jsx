@@ -34,7 +34,8 @@ export default function Footer() {
         <div className="absolute top-0 inset-x-1/4 h-8 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 dark:opacity-20 blur-2xl" />
       </div>
 
-      <div className="relative max-w-6xl mx-auto px-6 pt-16 pb-8">
+      {/* Extra bottom padding keeps the last row clear of the floating WhatsApp button */}
+      <div className="relative max-w-6xl mx-auto px-6 pt-16 pb-24 md:pb-28">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8 mb-12">
           {/* Brand */}
           <div className="md:col-span-5">
@@ -104,7 +105,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="pt-6 border-t border-slate-900/10 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-slate-500 dark:text-gray-500 text-center sm:text-left">
-            © {new Date().getFullYear()} Sk Nadeem Ahammad. All rights reserved.
+            © {new Date().getFullYear()} SNA. All rights reserved.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3">

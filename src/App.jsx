@@ -12,6 +12,7 @@ import Navbar from "./Navbar.jsx";
 import Hero from "./Hero.jsx";
 import Skills from "./Skills.jsx";
 import CustomCursor from "./CustomCursor.jsx";
+import WhatsAppButton from "./WhatsAppButton.jsx";
 
 // The loading screen plays once per browser session (not on every reload),
 // and never for visitors who have turned off animations in their system settings
@@ -82,6 +83,9 @@ function App() {
 
       {/* Footer */}
       <Footer />
+
+      {/* Floating WhatsApp chat button */}
+      <WhatsAppButton />
     </div>
   );
 }

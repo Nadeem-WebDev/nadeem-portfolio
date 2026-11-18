@@ -18,8 +18,8 @@ const skillGroups = [
     skills: [
       { name: "JavaScript", icon: devicon("javascript/javascript-original") },
       { name: "PHP", icon: devicon("php/php-original") },
-      { name: "SQL", icon: devicon("azuresqldatabase/azuresqldatabase-original") },
       { name: "Python", icon: devicon("python/python-original") },
+      { name: "SQL", icon: devicon("azuresqldatabase/azuresqldatabase-original") },
       { name: "C", icon: devicon("c/c-original") },
     ],
   },

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import {  GraduationCap,  Sparkles,  Mail,  Rocket,  FileText,  Award,  ArrowUpRight } from "lucide-react";
+import {  Sparkles,  Mail,  Rocket,  FileText,  Award,  ArrowUpRight } from "lucide-react";
 import { FaGithub, FaLinkedin, FaEnvelope, FaInstagram } from "react-icons/fa";
 import { motion } from "framer-motion";
 
@@ -14,6 +14,8 @@ import Contact from "./Contact.jsx";
 import Projects from "./Projects.jsx";
 import Experience from "./Experience.jsx";
 import About from "./About.jsx";
+import Education from "./Education.jsx";
+import VisitCounter from "./VisitCounter.jsx";
 import TextType from "./TextType.jsx";
 import Preloader from "./Preloader.jsx";
 import Navbar from "./Navbar.jsx";
@@ -106,9 +108,15 @@ function App() {
               Hello I'm
             </h1>
 
-            <h1 className="text-4xl md:text-6xl font-extrabold mb-4 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+            {/* Name: fades up on load, with a light sweeping across the gradient (see .name-shine in index.css) */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              className="name-shine text-4xl md:text-6xl font-extrabold mb-4"
+            >
               Sk Nadeem Ahammad
-            </h1>
+            </motion.h1>
 
             {/* min-h keeps the layout steady while the text is typed and erased */}
             <p className="text-lg md:text-xl text-slate-700 dark:text-blue-100/90 mb-6 min-h-[1.75rem] md:min-h-[2rem]">
@@ -197,83 +205,8 @@ function App() {
         {/* Skills Section */}
         <Skills />
 
-        {/*Education*/}
-        <section
-          id="education"
-          className="relative py-20 px-4 bg-slate-50 dark:bg-black overflow-hidden"
-        >
-          {/* Background Glows */}
-          <div className="absolute inset-0">
-            <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-pink-600 rounded-full blur-3xl opacity-10 animate-pulse" />
-            <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-blue-500 rounded-full blur-3xl opacity-10 animate-pulse" />
-          </div>
-
-          <motion.div
-            className="relative z-10 max-w-4xl mx-auto"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            {/* Section Heading */}
-            <div className="flex items-center space-x-2 mb-12">
-              <GraduationCap className="text-blue-500" size={28} />
-              <h2 className="text-3xl md:text-4xl font-bold tracking-wide text-slate-900 dark:text-white">
-                Education
-              </h2>
-            </div>
-
-            {/* Vertical Timeline Line */}
-            <div className="relative border-l-2 border-blue-500/30 pl-6 space-y-12">
-              {[
-                {
-                  degree: "Bachelor of Engineering (Information Technology)",
-                  institution: "Theem College of Engineering",
-                  period: "2021 - 2025",
-                  score: "CGPA: 7.75",
-                },
-                {
-                  degree: "Higher Secondary Certificate (HSC)",
-                  institution: "Thakur College of Science & Commerce",
-                  period: "2021",
-                  score: "Percentage: 81.67%",
-                },
-                {
-                  degree: "Secondary School Certificate (SSC)",
-                  institution: "S.S. Patna High School",
-                  period: "2019",
-                  score: "Percentage: 79.86%",
-                },
-              ].map((edu, index) => (
-                <motion.div
-                  key={edu.degree}
-                  className="relative ml-4"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.2 }}
-                  viewport={{ once: true }}
-                >
-                  {/* Timeline Dot */}
-                  <div className="absolute -left-[33px] top-1.5 w-5 h-5 bg-blue-500 border-4 border-slate-50 dark:border-black rounded-full shadow-lg" />
-
-                  {/* Card Content */}
-                  <div className="p-5 md:p-6 bg-slate-900/5 dark:bg-white/5 border border-slate-900/10 dark:border-white/10 rounded-xl backdrop-blur-xl shadow-xl hover:bg-slate-900/10 dark:hover:bg-white/10 transition-all duration-300 transform hover:scale-105">
-                    <h3 className="text-xl md:text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-                      {edu.degree}
-                    </h3>
-                    <div className="flex justify-between text-xs md:text-sm text-slate-600 dark:text-blue-200 mb-3">
-                      <span>{edu.institution}</span>
-                      <span>{edu.period}</span>
-                    </div>
-                    <p className="text-sm md:text-base text-slate-700 dark:text-blue-100/90">
-                      {edu.score}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </section>
+        {/* Education Section */}
+        <Education />
 
         {/*certificate section*/}
         <section
@@ -362,10 +295,12 @@ function App() {
       </main>
 
       {/* Footer */}
-      <footer className="py-6 border-t border-blue-900/30 bg-slate-50 dark:bg-black text-center">
+      <footer className="py-6 border-t border-blue-900/30 bg-slate-50 dark:bg-black text-center flex flex-col items-center gap-3">
         <p className="text-slate-600 dark:text-gray-400 text-sm">
           © {new Date().getFullYear()} Sk Nadeem Ahammad. All rights reserved.
         </p>
+        {/* Total visitors / page views (hidden if they can't be loaded) */}
+        <VisitCounter />
       </footer>
     </div>
   );

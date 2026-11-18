@@ -31,4 +31,11 @@ export default [
       ],
     },
   },
+  // Serverless functions and config files run in Node.js, not the browser
+  {
+    files: ['api/**/*.js', 'vite.config.js'],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
 ];

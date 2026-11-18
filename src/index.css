@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ---------- Site font: Plus Jakarta Sans (self-hosted, SIL Open Font License,
+   see public/fonts/OFL-LICENSE.txt). One variable file covers weights 200–800. */
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap; /* show the fallback font until it loads, never invisible text */
+  src: url('/fonts/plus-jakarta-sans-latin-variable.woff2') format('woff2-variations'),
+       url('/fonts/plus-jakarta-sans-latin-variable.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -43,7 +57,7 @@
 }
 
 /* The same hexagons drawn in blue, shown only in a soft circle around the mouse.
-   --hex-x / --hex-y are set by trackHexGlow in App.jsx. */
+   --hex-x / --hex-y are set by trackHexGlow in Hero.jsx. */
 .hex-grid-glow {
   background-image: url("data:image/svg+xml,%3Csvg width='60' height='103.92304845413264' viewBox='0 0 60 103.92304845413264' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 103.92304845413264L0 86.60254037844386V51.96152422706632L30 34.64101615137754L60 51.96152422706632V86.60254037844386Z' fill='none' stroke='rgba(37,99,235,0.55)' stroke-width='1.5'/%3E%3Cpath d='M0 34.64101615137754L30 17.32050807568877L60 34.64101615137754' fill='none' stroke='rgba(37,99,235,0.55)' stroke-width='1.5'/%3E%3C/svg%3E");
   background-attachment: fixed;
@@ -91,21 +105,56 @@
   animation: slideUp 0.6s ease-out forwards;
 }
 
-/* Custom scrollbar */
+/* ---------- Custom scrollbar (Chrome, Edge, Safari) ---------- */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-slate-100 dark:bg-black;
+  background: #f1f5f9; /* slate-100 */
+}
+.dark ::-webkit-scrollbar-track {
+  background: #000;
 }
 
+/* Gradient thumb; the border (same colour as the track) makes it look inset */
 ::-webkit-scrollbar-thumb {
-  @apply bg-blue-900 rounded-full;
+  background: linear-gradient(to bottom, #3b82f6, #a855f7, #ec4899);
+  border-radius: 999px;
+  border: 2px solid #f1f5f9;
+}
+.dark ::-webkit-scrollbar-thumb {
+  border-color: #000;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-blue-800;
+  background: linear-gradient(to bottom, #60a5fa, #c084fc, #f472b6);
+}
+
+/* Firefox can't show gradients in scrollbars, so it gets a solid purple one.
+   (Only for Firefox: in Chrome, scrollbar-color would switch off the gradient above.) */
+@supports (-moz-appearance: none) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: #8b5cf6 #f1f5f9;
+  }
+  html.dark {
+    scrollbar-color: #8b5cf6 #000;
+  }
+}
+
+/* ---------- Thin divider line between page sections ---------- */
+main > section + section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(80%, 64rem);
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(59, 130, 246, 0.35), rgba(168, 85, 247, 0.35), transparent);
+  pointer-events: none;
+  z-index: 1;
 }
 
 /* ---------- Hero name: light sweeping across the gradient text ---------- */

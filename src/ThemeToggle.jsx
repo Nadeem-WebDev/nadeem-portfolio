@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sun, Moon } from 'lucide-react';
-import { useTheme } from './ThemeContext.jsx';
+import { useTheme } from './useTheme.js';
 
 // Sun/moon button that switches between dark and light mode
 export default function ThemeToggle() {

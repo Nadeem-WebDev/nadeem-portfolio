@@ -23,6 +23,15 @@
     </script>
 
     <style>
+      /* Same self-hosted font as the main site */
+      @font-face {
+        font-family: 'Plus Jakarta Sans';
+        font-style: normal;
+        font-weight: 200 800;
+        font-display: swap;
+        src: url('/fonts/plus-jakarta-sans-latin-variable.woff2') format('woff2');
+      }
+
       :root {
         --page: #f8fafc;
         --text: #0f172a;
@@ -51,7 +60,7 @@
         padding: 24px 16px;
         background: var(--page);
         color: var(--text);
-        font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
         overflow: hidden;
         position: relative;
       }

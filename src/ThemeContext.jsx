@@ -1,11 +1,11 @@
-import { createContext, useContext, useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { flushSync } from 'react-dom';
+import { ThemeContext } from './useTheme.js';
 
 // theme is either 'dark' or 'light'.
 // The inline script in index.html adds the 'dark' class to <html> before the
 // first paint (so there's no flash of the wrong theme); this file keeps React
 // in sync with that class and switches it when the toggle is clicked.
-const ThemeContext = createContext(undefined);
 
 // Matches the page background of each theme (used for the mobile browser bar)
 const THEME_COLORS = { dark: '#000000', light: '#f8fafc' };
@@ -84,10 +84,3 @@ export function ThemeProvider({ children }) {
   );
 }
 
-export function useTheme() {
-  const context = useContext(ThemeContext);
-  if (context === undefined) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-  return context;
-}

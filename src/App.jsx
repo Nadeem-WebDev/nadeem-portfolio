@@ -4,6 +4,7 @@ import { FaGithub, FaLinkedin, FaEnvelope, FaInstagram } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 import nadImage from "./images/profile picture.jpg";
+import rockSolidLogo from "./images/rock-solid-logo.png";
 
 import resume from "./certificates/Nadeem_Resume.pdf";
 import certificate1 from "./certificates/Coursera AWS S3 Basics.pdf";
@@ -11,6 +12,27 @@ import certificate2 from "./certificates/Data Science using python.pdf";
 import certificate3 from "./certificates/Responsive_Web_Design_freeCodeCamp.pdf";
 import certificate4 from "./certificates/Infosys AI&ML.pdf";
 import Contact from "./Contact.jsx";
+
+// Builds a devicon SVG URL, e.g. devicon("react/react-original")
+const devicon = (path) =>
+  `https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${path}.svg`;
+
+// Used by both the desktop navbar and the mobile side menu
+const navLinks = [
+  { href: "#home", label: "Home" },
+  { href: "#about", label: "About" },
+  { href: "#skills", label: "Skills" },
+  { href: "#projects", label: "Projects" },
+  { href: "#experience", label: "Experience" },
+  { href: "#contact", label: "Contact" },
+  { href: resume, label: "Resume" },
+];
+
+// PDF links (the resume) open in a new tab
+const linkTarget = (href) =>
+  href.includes(".pdf")
+    ? { target: "_blank", rel: "noopener noreferrer" }
+    : {};
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -36,6 +58,16 @@ function App() {
     document.body.style.overflow = isMenuOpen ? "hidden" : "unset";
   }, [isMenuOpen]);
 
+  // Close the mobile menu if the window is widened to desktop size (md = 768px)
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 768px)");
+    const handleChange = (e) => {
+      if (e.matches) setIsMenuOpen(false);
+    };
+    desktop.addEventListener("change", handleChange);
+    return () => desktop.removeEventListener("change", handleChange);
+  }, []);
+
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Navbar */}
@@ -46,6 +78,20 @@ function App() {
             SNA.
           </h1>
 
+          {/* Desktop Links */}
+          <div className="hidden md:flex items-center gap-6 lg:gap-8">
+            {navLinks.map(({ href, label }) => (
+              <a
+                key={label}
+                href={href}
+                {...linkTarget(href)}
+                className="text-sm font-medium tracking-wide text-gray-300 hover:text-blue-400 transition-colors duration-300"
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+
           <div className="flex items-center space-x-4">
             {/* Hire Me Button */}
             <a
@@ -55,11 +101,12 @@ function App() {
               Hire Me
             </a>
 
-            {/* Hamburger Button */}
+            {/* Hamburger Button (mobile only) */}
             <button
               ref={buttonRef}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-3 bg-blue-500/10 hover:bg-blue-500/20 rounded-full transition-all duration-300"
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+              className="md:hidden p-3 bg-blue-500/10 hover:bg-blue-500/20 rounded-full transition-all duration-300"
             >
               {isMenuOpen ? (
                 <X size={26} className="text-blue-400" />
@@ -71,9 +118,9 @@ function App() {
         </div>
       </nav>
 
-      {/* Side Menu */}
+      {/* Side Menu (mobile only) */}
       <div
-        className={`fixed top-0 right-0 h-full w-80 bg-black z-50 transform transition-transform duration-300 ${
+        className={`md:hidden fixed top-0 right-0 h-full w-80 bg-black z-50 transform transition-transform duration-300 ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
         ref={menuRef}
@@ -88,22 +135,13 @@ function App() {
             </button>
           </div>
           <div className="flex flex-col space-y-6">
-            {[
-              { href: "#home", label: "Home" },
-              { href: "#about", label: "About" },
-              { href: "#skills", label: "Skills" },
-              { href: "#projects", label: "Projects" },
-              // { href: '#experience', label: 'Experience' },
-              { href: "#contact", label: "Contact" },
-              { href: resume, label: "Download Resume" },
-            ].map(({ href, label }) => (
+            {navLinks.map(({ href, label }) => (
               <a
                 key={label}
                 href={href}
                 onClick={() => setIsMenuOpen(false)}
                 className="text-lg tracking-wide hover:text-blue-400 transition-colors duration-300 border-b border-white/5 pb-2"
-                target={href.includes(".pdf") ? "_blank" : undefined}
-                rel={href.includes(".pdf") ? "noopener noreferrer" : undefined}
+                {...linkTarget(href)}
               >
                 {label}
               </a>
@@ -152,8 +190,7 @@ function App() {
               I turn ideas into responsive, interactive web experiences{" "}
               <Sparkles size={16} className="inline-block align-[-2px] text-yellow-300" />.
               Passionate about frontend magic, backend logic, and building
-              full-stack apps that solve real-world problems. Exploring Python,
-              Java, React, and AI to level up my craft.
+              full-stack apps that solve real-world problems. Exploring Python, Node.js, React, and AI to level up my craft.
             </p>
 
             {/* Buttons */}
@@ -341,19 +378,19 @@ function App() {
                   Languages
                 </h3>
                 <div className="flex flex-wrap justify-center gap-3">
-                  {["https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg", 
-                  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg", 
-                  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg", 
-                  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg", 
-                  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg", 
-                  "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azuresqldatabase/azuresqldatabase-original.svg"
-                ].map((skill) => (
+                  {[
+                    { name: "JavaScript", icon: devicon("javascript/javascript-original") },
+                    { name: "PHP", icon: devicon("php/php-original") },
+                    { name: "SQL", icon: devicon("azuresqldatabase/azuresqldatabase-original") },
+                    { name: "Python", icon: devicon("python/python-original") },
+                    { name: "C", icon: devicon("c/c-original") },
+                  ].map((skill) => (
                     <div
-                      key={skill}
+                      key={skill.name}
                       className="px-4 py-4 bg-white/10 text-white rounded-full border border-white/20 text-sm font-semibold hover:bg-pink-400 hover:text-white transition-all duration-300 backdrop-blur-md shadow-md"
                     >
-                      <abbr title={skill.split("/")[7]}>
-                        <img src={skill} alt="icon" className="w-7 h-7 text-blue-500" />
+                      <abbr title={skill.name}>
+                        <img src={skill.icon} alt={skill.name} className="w-7 h-7 text-blue-500" />
                       </abbr>
                     </div>
                   ))}
@@ -370,21 +407,23 @@ function App() {
                 </h3>
                 <div className="flex flex-wrap justify-center gap-3">
                   {[
-                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg",
-                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg",
-                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
-                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg",
-                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg",
-                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg",
-                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg",
-                    "https://media.lordicon.com/icons/wired/gradient/1330-rest-api.svg",
+                    // Frontend
+                    { name: "React.js", icon: devicon("react/react-original") },
+                    { name: "HTML5", icon: devicon("html5/html5-original") },
+                    { name: "CSS3", icon: devicon("css3/css3-original") },
+                    { name: "Tailwind CSS", icon: devicon("tailwindcss/tailwindcss-original") },
+                    // Backend
+                    { name: "Node.js", icon: devicon("nodejs/nodejs-original") },
+                    { name: "Express.js", icon: devicon("express/express-original") },
+                    { name: "REST APIs", icon: "https://media.lordicon.com/icons/wired/gradient/1330-rest-api.svg" },
+                    { name: "JWT Authentication", icon: devicon("jwt/jwt-original") },
                   ].map((skill) => (
                     <div
-                      key={skill}
+                      key={skill.name}
                       className="px-4 py-4 bg-white/10 text-white rounded-full border border-white/20 text-sm font-semibold hover:bg-blue-500 hover:text-white transition-all duration-300 backdrop-blur-md shadow-md"
                     >
-                      <abbr title={skill.split("/")[7] || "rest api"}>
-                        <img src={skill} alt="icon" className="w-7 h-7 text-blue-500" />
+                      <abbr title={skill.name}>
+                        <img src={skill.icon} alt={skill.name} className="w-7 h-7 text-blue-500" />
                       </abbr>
                     </div>
                   ))}
@@ -400,18 +439,20 @@ function App() {
                   Databases
                 </h3>
                 <div className="flex flex-wrap justify-center gap-3">
-                  {["https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg",
-                   "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg", 
-                   "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg", 
-                   "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg"
+                  {[
+                    { name: "PostgreSQL", icon: devicon("postgresql/postgresql-original") },
+                    { name: "MySQL", icon: devicon("mysql/mysql-original") },
+                    { name: "MongoDB", icon: devicon("mongodb/mongodb-original") },
+                    { name: "SQLite", icon: devicon("sqlite/sqlite-original") },
+                    { name: "ClickHouse", icon: devicon("clickhouse/clickhouse-original") },
                   ].map(
                     (skill) => (
                       <div
-                        key={skill}
+                        key={skill.name}
                         className="px-4 py-4 bg-white/10 text-white rounded-full border border-white/20 text-sm font-semibold hover:bg-green-400 hover:text-white transition-all duration-300 backdrop-blur-md shadow-md"
                       >
-                        <abbr title={skill.split("/")[7]}>
-                          <img src={skill} alt="icon" className="w-7 h-7 text-blue-500" />
+                        <abbr title={skill.name}>
+                          <img src={skill.icon} alt={skill.name} className="w-7 h-7 text-blue-500" />
                         </abbr>
                       </div>
                     )
@@ -424,23 +465,25 @@ function App() {
                 <div className="bg-gradient-to-tr from-yellow-400 to-pink-400 p-4 rounded-full shadow-xl transform hover:rotate-12 transition-all duration-500">
                   <Wrench size={32} className="text-white" />
                 </div>
-                <h3 className="text-2xl font-semibold text-white mt-6 mb-4">
-                  Tools
+                <h3 className="text-2xl font-semibold text-white mt-6 mb-4 text-center">
+                  Tools & Platforms
                 </h3>
                 <div className="flex flex-wrap justify-center gap-3">
                   {[
-                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg",
-                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg",
-                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg",
-                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg",
-                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original.svg",
+                    { name: "Git", icon: devicon("git/git-original") },
+                    { name: "GitHub", icon: devicon("github/github-original") },
+                    { name: "GitLab", icon: devicon("gitlab/gitlab-original") },
+                    { name: "Linux", icon: devicon("linux/linux-original") },
+                    { name: "Sentry", icon: devicon("sentry/sentry-original") },
+                    { name: "Postman", icon: devicon("postman/postman-original") },
+                    { name: "VS Code", icon: devicon("vscode/vscode-original") },
                   ].map((skill) => (
                     <div
-                      key={skill}
+                      key={skill.name}
                       className="px-4 py-4 bg-white/10 text-white rounded-full border border-white/20 text-sm font-semibold hover:bg-yellow-400 hover:text-white hover:border-yellow-400 transition-all duration-300 backdrop-blur-md shadow-md"
                     >
-                      <abbr title={skill.split("/")[7]}>
-                        <img src={skill} alt="icon" className="w-7 h-7 text-blue-500" />
+                      <abbr title={skill.name}>
+                        <img src={skill.icon} alt={skill.name} className="w-7 h-7 text-blue-500" />
                       </abbr>
                     </div>
                   ))}
@@ -463,11 +506,25 @@ function App() {
               {[
                 // Projects from the SNA Digital portfolio
                 {
+                  title: "Clinix OPD System",
+                  description:
+                    "Built a multi-tenant SaaS clinic management CRM featuring patient records, appointment scheduling, live OPD queue tracking, digital prescriptions, billing, role-based access, and analytics dashboards.",
+                  image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=800&h=400&auto=format&fit=crop",
+                  link: "https://clinix-jywo.onrender.com/",
+                },
+                {
                   title: "Salon Appointment Booking",
                   description:
                     "Built a full-stack PERN salon booking system with live queue tracking and OTP email verification. Features an admin dashboard with Recharts analytics.",
                   image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=800&h=400&auto=format&fit=crop",
                   link: "https://salon-appointment-booking-system.onrender.com/",
+                },
+                {
+                  title: "Chat Application 2.0",
+                  description:
+                    "Built a real-time chat app with instant one-on-one messaging powered by Socket.io. Implemented secure JWT authentication with bcrypt hashing.",
+                  image: "https://images.unsplash.com/photo-1611606063065-ee7946f0787a?q=80&w=800&h=400&auto=format&fit=crop",
+                  link: "https://chat-application-2-0.onrender.com/",
                 },
                 {
                   title: "Bakery Shop Web App",
@@ -484,25 +541,11 @@ function App() {
                   link: "https://sna-real-estate-07.vercel.app/",
                 },
                 {
-                  title: "Chat Application 2.0",
-                  description:
-                    "Built a real-time chat app with instant one-on-one messaging powered by Socket.io. Implemented secure JWT authentication with bcrypt hashing.",
-                  image: "https://images.unsplash.com/photo-1611606063065-ee7946f0787a?q=80&w=800&h=400&auto=format&fit=crop",
-                  link: "https://chat-application-2-0.onrender.com/",
-                },
-                {
                   title: "Fitness Studio Landing Page",
                   description:
                     "A modern, high-performance landing page for a fitness center. Features a fully responsive layout, membership tier showcases, and an engaging UI designed to drive lead conversions.",
                   image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&h=400&auto=format&fit=crop",
                   link: "https://gym-site-demoo.netlify.app/",
-                },
-                {
-                  title: "Clinix OPD System",
-                  description:
-                    "Built a multi-tenant SaaS clinic management CRM featuring patient records, appointment scheduling, live OPD queue tracking, digital prescriptions, billing, role-based access, and analytics dashboards.",
-                  image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=800&h=400&auto=format&fit=crop",
-                  link: "https://clinix-jywo.onrender.com/",
                 },
               ].map((project, index) => (
                 <div
@@ -537,8 +580,8 @@ function App() {
           </div>
         </section>
 
-        {/* experience section */}
-        {/* <section
+        {/* Experience Section */}
+        <section
           id="experience"
           className="relative py-20 px-4 bg-black overflow-hidden"
         >
@@ -548,7 +591,7 @@ function App() {
           </div>
 
           <motion.div
-            className="relative z-10 max-w-7xl mx-auto"
+            className="relative z-10 max-w-5xl mx-auto"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -559,61 +602,99 @@ function App() {
               <h2 className="text-3xl md:text-4xl font-bold tracking-wide text-white">
                 Experience
               </h2>
-            </div> */}
+            </div>
 
-        {/* Experience Cards */}
-        {/* <motion.div
-              className="space-y-6 md:space-y-8"
-              initial="hidden"
-              whileInView="visible"
-              variants={{
-                visible: {
-                  transition: {
-                    staggerChildren: 0.2,
-                  },
-                },
-              }}
-              viewport={{ once: true }}
-            >
+            {/* Experience Cards */}
+            <div className="space-y-6 md:space-y-8">
               {[
                 {
-                  role: "Java Developer Intern",
-                  company: "Infosys Springboard",
-                  period: "2024 - Present",
-                  description:
-                    "Building a Multicloud storage application with unified Interface .",
-                },
-                {
-                  role: "MERN Stack Developer",
-                  company: "EYGDS",
-                  period: "2024 - 2025",
-                  description:
-                    "Developed responsive web applications using React and modern typescript.",
+                  role: "Full Stack Developer (Intern)",
+                  company: "Rock Solid Solutions",
+                  period: "Aug 2025 – Nov 2026",
+                  logo: rockSolidLogo,
+                  points: [
+                    <>
+                      Shipped <strong className="text-white">250+ merge requests</strong> across 16 production repositories.
+                    </>,
+                    <>
+                      Sped up a slow database job from <strong className="text-white">15+ min to 55 s</strong>.
+                    </>,
+                    <>
+                      Fixed <strong className="text-white">150+ production issues</strong> and patched security vulnerabilities.
+                    </>,
+                    <>
+                      Built customer features like automated domain-renewal reminder emails.
+                    </>,
+                  ],
+                  tech: ["PHP", "JavaScript", "PostgreSQL", "ClickHouse", "Sentry"],
                 },
               ].map((exp) => (
                 <motion.div
-                  key={exp.role}
-                  className="p-5 md:p-6 bg-white/5 border border-white/10 rounded-xl backdrop-blur-xl shadow-xl hover:bg-white/10 transition-all duration-300 transform hover:scale-105"
-                  variants={{
-                    hidden: { opacity: 0, y: 20 },
-                    visible: { opacity: 1, y: 0 },
-                  }}
+                  key={exp.company}
+                  className="p-6 md:p-8 bg-white/5 border border-white/10 rounded-xl backdrop-blur-xl shadow-xl hover:bg-white/10 transition-all duration-300"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  viewport={{ once: true }}
                 >
-                  <h3 className="text-xl md:text-2xl font-bold text-blue-400 mb-2">
-                    {exp.role}
-                  </h3>
-                  <div className="flex justify-between text-xs md:text-sm text-blue-200 mb-3">
-                    <span>{exp.company}</span>
-                    <span>{exp.period}</span>
+                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-1 md:gap-4 mb-4">
+                    <div className="flex items-center gap-4">
+                      {/* Company logo (falls back to initials if there's no logo) */}
+                      <div
+                        className={`w-14 h-14 flex-shrink-0 rounded-xl flex items-center justify-center overflow-hidden shadow-md ${
+                          exp.logo ? "border border-white/10" : "bg-white"
+                        }`}
+                      >
+                        {exp.logo ? (
+                          <img
+                            src={exp.logo}
+                            alt={`${exp.company} logo`}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <span className="text-lg font-extrabold text-blue-600">
+                            {exp.company
+                              .split(" ")
+                              .map((word) => word[0])
+                              .join("")}
+                          </span>
+                        )}
+                      </div>
+                      <div>
+                        <h3 className="text-xl md:text-2xl font-bold text-blue-400">
+                          {exp.role}
+                        </h3>
+                        <p className="text-base md:text-lg text-blue-200">
+                          {exp.company}
+                        </p>
+                      </div>
+                    </div>
+                    <span className="text-xs md:text-sm text-blue-200 whitespace-nowrap md:pt-2">
+                      {exp.period}
+                    </span>
                   </div>
-                  <p className="text-sm md:text-base text-blue-100/90">
-                    {exp.description}
-                  </p>
+
+                  <ul className="list-disc pl-5 space-y-2 text-sm md:text-base text-blue-100/90 marker:text-blue-500">
+                    {exp.points.map((point, i) => (
+                      <li key={i}>{point}</li>
+                    ))}
+                  </ul>
+
+                  <div className="flex flex-wrap gap-2 mt-6">
+                    {exp.tech.map((t) => (
+                      <span
+                        key={t}
+                        className="px-3 py-1 text-xs font-medium text-blue-100 bg-blue-500/10 border border-blue-500/30 rounded-full"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
                 </motion.div>
               ))}
-            </motion.div>
+            </div>
           </motion.div>
-        </section> */}
+        </section>
 
         {/*certificate section*/}
         <section
